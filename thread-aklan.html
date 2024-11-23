@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lagawan</title>
-  <link rel="stylesheet" href="CRUD.css">
-  <script type="text/javascript" src="CRUD.js" defer></script>
+  <link rel="stylesheet" href="thread-aklan.css">
+  <script type="text/javascript" src="thread-main.js" defer></script>
+
 </head>
 <body>
 
@@ -42,7 +43,7 @@
           <span>Home</span>
         </a>
       </li>
-      <li class="active">
+      <li>
         <a href="CRUD.html">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"/></svg>
           <span>Dashboard</span>
@@ -57,7 +58,7 @@
         <ul class="sub-menu">
           <div>
             <li><a href="#">Albay</a></li>
-            <li><a href="thread-aklan.html">Aklan</a></li>
+            <li class="active"><a href="#">Aklan</a></li>
             <li><a href="#">Bicol</a></li>
             <li><a href="#">Cebu</a></li>
             <li><a href="#">Capiz</a></li>
@@ -74,64 +75,88 @@
     </ul>
   </nav>
   <main class="container">
-  <div class="slide">
-    <div class="item" style="background-image: url(https://th.bing.com/th/id/OIP.AubKfdCNtzSRooIXikT-xgHaEK?rs=1&pid=ImgDetMain);">
-      <div class="content">
-        <div class="name">Jabol Island</div>
-        <div class="des">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab, eum!</div>
-        <button>See More</button>
-      </div>
-    </div>
-    <div class="item" style="background-image: url(https://assets.traveltriangle.com/blog/wp-content/uploads/2018/04/Boracay-Aklan.jpg);">
-      <div class="content">
-        <div class="name">Borabora Island</div>
-        <div class="des">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab, eum!</div>
-        <button>See More</button>
-      </div>
-    </div>
-    <div class="item" style="background-image: url(https://nomadparadise.com/wp-content/uploads/2020/10/171_00b.jpg);">
-      <div class="content">
-        <div class="name">Borat Peninsula</div>
-        <div class="des">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab, eum!</div>
-        <button>See More</button>
-      </div>
-    </div>
-    <div class="item" style="background-image: url(https://i.ibb.co/Bq4Q0M8/img4.jpg)">
-      <div class="content">
-        <div class="name">Australia</div>
-        <div class="des">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab, eum!</div>
-        <button>See More</button>
-      </div>
-    </div>
-    <div class="item" style="background-image: url(https://i.ibb.co/jTQfmTq/img5.jpg)">
-      <div class="content">
-        <div class="name">Netherland</div>
-        <div class="des">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab, eum!</div>
-        <button>See More</button>
-      </div>
-    </div>
-    <div class="item" style="background-image: url(https://i.ibb.co/RNkk6L0/img6.jpg)">
-      <div class="content">
-        <div class="name">Ireland</div>
-        <div class="des">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab, eum!</div>
-        <button>See More</button>
-      </div>
-    </div>
-  </div>
-  <div class="button">
-    <button class="prev"><i class="fa-solid fa-arrow-left"></i></button>
-    <button class="next"><i class="fa-solid fa-arrow-right"></i></button>
-  </div>
-  <div class="actionbutton">
-    <button class="icon-button create" onclick="window.location.href='FORM.html'"></button>
-    <button class="icon-button edit" onclick="window.location.href='FORM.html'"></button>
-    <button class="icon-button delete" id="delete-button"></button>
-  </div>
-</main>
+    <header class="header" id="home">
 
-
-    
-
-  <script src="CRUD.js"></script>
-</body>
-</html>
+      <div class="section__container header__container">
+        <div class="header__content">
+          <h3 class="section__subheader">Aklan</h3>
+          <h1 class="section__header">
+            Be Prepared For The Mountains And Beyond!
+          </h1>
+          <div class="scroll__btn">
+            <a href="#about">
+              Scroll down
+              <span><i class="ri-arrow-down-line"></i></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="about">
+      <div class="section__container about__container">
+        <div class="about__image about__image-1" id="about">
+          <img src="assets/about-1.jpg" alt="about" />
+        </div>
+        <div class="about__content about__content-1">
+          <h3 class="section__subheader">GET STARTED</h3>
+          <h2 class="section__header">What level of hiker are you?</h2>
+          <p>
+            Whether you're a novice seeking scenic strolls or an experienced
+            trekker craving challenging ascents, we've curated a diverse range
+            of trails to cater to every adventurer. Uncover your hiking
+            identity, explore tailored recommendations, and embrace the great
+            outdoors with a newfound understanding of your capabilities.
+          </p>
+          <div class="about__btn">
+            <a href="#">
+              Read more
+              <span><i class="ri-arrow-right-line"></i></span>
+            </a>
+          </div>
+        </div>
+        <div class="about__image about__image-2" id="equipment">
+          <img src="assets/about-2.jpg" alt="about" />
+        </div>
+        <div class="about__content about__content-2">
+          <h3 class="section__subheader">HIKING ESSENTIALS</h3>
+          <h2 class="section__header">Picking the right hiking gear!</h2>
+          <p>
+            From durable footwear that conquers rugged trails to lightweight
+            backpacks that carry your essentials with ease, we navigate the
+            intricacies of gear selection to ensure you're geared up for success
+            on every hike. Lace up your boots and let the journey begin with
+            confidence, knowing you've chosen the right gear for the trail
+            ahead!
+          </p>
+          <div class="about__btn">
+            <a href="#">
+              Read more
+              <span><i class="ri-arrow-right-line"></i></span>
+            </a>
+          </div>
+        </div>
+        <div class="about__image about__image-3" id="blog">
+          <img src="assets/about-3.jpg" alt="about" />
+        </div>
+        <div class="about__content about__content-3">
+          <h3 class="section__subheader">WHERE YOU GO IS THE KEY</h3>
+          <h2 class="section__header">Understanding your map & timing</h2>
+          <p>
+            Knowing when to start and anticipating the changing conditions
+            ensures a safe and enjoyable journey. So, dive into the details,
+            grasp the contours, and synchronize your steps with the rhythm of
+            nature. It's not just a hike; it's a journey orchestrated by your
+            map and timed to perfection.
+          </p>
+          <div class="about__btn">
+            <a href="#">
+              Read more
+              <span><i class="ri-arrow-right-line"></i></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    </main>
+    </body>
+    </html>
