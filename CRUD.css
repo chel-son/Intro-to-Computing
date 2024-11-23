@@ -170,7 +170,7 @@ nav svg {
   left: 100px;
   width: 300px;
   text-align: left;
-  color: #eee;
+  color: blanchedalmond;
   transform: translate(0, -50%);
   font-family: system-ui;
   display: none;
@@ -201,6 +201,8 @@ nav svg {
   margin-bottom: 20px;
   opacity: 0;
   animation: animate 1s ease-in-out 0.3s 1 forwards;
+  font-size: 20px;
+  font-weight: 900;
 }
 
 .content button {
@@ -210,6 +212,7 @@ nav svg {
   opacity: 0;
   animation: animate 1s ease-in-out 0.6s 1 forwards;
 }
+
 
 @keyframes animate {
   from {

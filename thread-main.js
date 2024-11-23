@@ -31,3 +31,22 @@ Array.from(sidebar.getElementsByClassName('show')).forEach(ul => {
 })
 }
 
+document.querySelectorAll('.about__btn').forEach(btn => {
+  btn.addEventListener('click', event => {
+    event.preventDefault(); // Prevent default link behavior
+
+    const readMoreBtn = event.target;
+    const aboutContent = readMoreBtn.closest('.about__content');
+    const readMoreText = aboutContent.querySelector('.read-more-text');
+
+    if (readMoreBtn && readMoreText) {
+      readMoreText.classList.toggle('read-more-text--show');
+      readMoreBtn.textContent = readMoreBtn.textContent.includes('Read More')
+        ? "Read Less..." : "Read More...";
+    }
+  });
+});
+
+
+
+
