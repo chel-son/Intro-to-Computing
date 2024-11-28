@@ -116,9 +116,78 @@ nav svg {
   position: relative;
   width: 100%;
   overflow: hidden;
-  margin-top: 60px; /* To avoid overlay with the navbar */
+  margin-top: 60px; 
 }
 
+/* Dropdown*/
+.sub-menu-wrap{
+  position:absolute;
+  top: 100%;
+  right: 10%;
+  width: 320px;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.5s;
+}
+.sub-menu-wrap.open-menu{
+  max-height: 400px;
+}
+.dropdown-menu{
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 20px;
+  margin: 10px;
+  border-radius: 20px;
+}
+.user-info{
+  display:flex;
+  align-items: center ;
+}
+.user-info h3{
+  font-weight: 500;
+  color:#11121a;
+}
+.user-info img{
+  width: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+
+}
+.sub-menu hr{
+  border: 0;
+  height: 1px;
+  width: 100%;
+  background: #ccc;
+  margin: 15px 0 10px;
+}
+.sub-menu-link{
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #11121a;
+  margin: 12px 0;
+}
+
+.sub-menu-link p{
+  width: 100%;
+}
+.sub-menu-link img{
+  width: 40px;
+  background: lightgray;
+  border-radius: 50%;
+  padding: 8px;
+  margin-right: 15px;
+}
+.sub-menu-link span{
+  font-size: 22px;
+  transition: transform 0.5s;
+}
+.sub-menu-link:hover span{
+  transform: translate(5px);
+}
+.sub-menu-link:hover p{
+  font-weight: 600;
+
+}
 
 /* Sidebar Styling*/
 :root {
@@ -515,7 +584,6 @@ header {
     height: 100%;
     overflow: hidden;
     position: absolute;
-    background-image: url(https://c0.wallpaperflare.com/preview/411/807/779/philippines-kawasan-falls-badian-asia.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -538,7 +606,7 @@ header {
     }
     20%
     {
-        background-image: url(https://assets.traveltriangle.com/blog/wp-content/uploads/2018/04/Boracay-Aklan.jpg);
+        background-image: url(https://c0.wallpaperflare.com/preview/411/807/779/philippines-kawasan-falls-badian-asia.jpg);
     }
     40%
     {

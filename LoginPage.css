@@ -148,6 +148,18 @@ header{
     left: 17px;
     color: #fff;
 }
+
+.input-box-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.input-box-wrapper .submit {
+    width: 48%;
+    margin: 0;
+}
+
 .submit{
     font-size: 15px;
     font-weight: 500;
