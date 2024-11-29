@@ -121,9 +121,9 @@ nav svg {
   margin-top: 60px; 
 }
 
-/* Dropdown*/
-.sub-menu-wrap{
-  position:absolute;
+/* Dropdown */
+.sub-menu-wrap {
+  position: absolute;
   top: 100%;
   right: 10%;
   width: 320px;
@@ -131,37 +131,45 @@ nav svg {
   overflow: hidden;
   transition: max-height 0.5s;
 }
-.sub-menu-wrap.open-menu{
+
+.sub-menu-wrap.open-menu {
   max-height: 400px;
 }
-.dropdown-menu{
+
+.dropdown-menu {
   background-color: rgba(255, 255, 255, 0.7);
   padding: 20px;
   margin: 10px;
   border-radius: 20px;
 }
-.user-info{
-  display:flex;
-  align-items: center ;
+
+.user-info {
+  display: flex;
+  align-items: center;
 }
-.user-info h3{
+
+.user-info h3 {
   font-weight: 500;
-  color:#11121a;
+  color: #11121a;
 }
-.user-info img{
+
+.user-info img {
   width: 60px;
+  height: 60px; /* Ensure height and width are equal */
   border-radius: 50%;
   margin-right: 15px;
-
+  object-fit: cover; /* Ensures the image is cropped to fit the container */
 }
-.sub-menu hr{
+
+.sub-menu hr {
   border: 0;
   height: 1px;
   width: 100%;
   background: #ccc;
   margin: 15px 0 10px;
 }
-.sub-menu-link{
+
+.sub-menu-link {
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -169,26 +177,31 @@ nav svg {
   margin: 12px 0;
 }
 
-.sub-menu-link p{
+.sub-menu-link p {
   width: 100%;
 }
-.sub-menu-link img{
+
+.sub-menu-link img {
   width: 40px;
+  height: 40px;
   background: lightgray;
   border-radius: 50%;
   padding: 8px;
   margin-right: 15px;
+  object-fit: cover; 
 }
-.sub-menu-link span{
+
+.sub-menu-link span {
   font-size: 22px;
   transition: transform 0.5s;
 }
-.sub-menu-link:hover span{
+
+.sub-menu-link:hover span {
   transform: translate(5px);
 }
-.sub-menu-link:hover p{
-  font-weight: 600;
 
+.sub-menu-link:hover p {
+  font-weight: 600;
 }
 
 

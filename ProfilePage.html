@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
     <link rel="stylesheet" href="profile.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="container light-style flex-grow-1 container-p-y">
         <h4 class="font-weight-bold py-3 mb-4">
@@ -30,14 +28,13 @@
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="account-general">
                             <div class="card-body media align-items-center">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt
-                                    class="d-block ui-w-80">
+                                <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt id="profileImage" class="d-block ui-w-80">
                                 <div class="media-body ml-4">
                                     <label class="btn btn-outline-primary">
                                         Upload new photo
-                                        <input type="file" class="account-settings-fileinput">
+                                        <input type="file" class="account-settings-fileinput" onchange="previewImage(event)">
                                     </label> &nbsp;
-                                    <button type="button" class="btn btn-default md-btn-flat">Reset</button>
+                                    <button type="button" class="btn btn-default md-btn-flat" onclick="resetImage()">Reset Image</button>
                                     <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
                                 </div>
                             </div>
@@ -45,15 +42,11 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label class="form-label">Username</label>
-                                    <input type="text" class="form-control mb-1" value="nmaxwell">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Name</label>
-                                    <input type="text" class="form-control" value="Nelle Maxwell">
+                                    <input type="text" id="username" class="form-control mb-1">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">E-mail</label>
-                                    <input type="text" class="form-control mb-1" value="nmaxwell@mail.com">
+                                    <input type="text" id="email" class="form-control mb-1">
                                 </div>
                             </div>
                         </div>
@@ -61,15 +54,15 @@
                             <div class="card-body pb-2">
                                 <div class="form-group">
                                     <label class="form-label">Current password</label>
-                                    <input type="password" class="form-control">
+                                    <input type="password" id="currentPassword" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">New password</label>
-                                    <input type="password" class="form-control">
+                                    <input type="password" id="newPassword" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Repeat new password</label>
-                                    <input type="password" class="form-control">
+                                    <input type="password" id="repeatNewPassword" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -77,34 +70,224 @@
                             <div class="card-body pb-2">
                                 <div class="form-group">
                                     <label class="form-label">User Type</label>
-                                    <select class="custom-select">
-                                        <option selected>Admin</option>
-                                        <option>Regular</option>
-
-                                    </select>
+                                    <input type="text" id="userType" class="form-control" readonly>
                                 </div>
-                                <div class="form-group">
-                                    <label class="form-label">Request Approval for Admin</label>
-                                    <input type="text" class="form-control" value="Waiting for confirmation">
+                                <div id="requestApprovalSection">
+                                    <div class="form-group">
+                                        <label class="form-label">Request Approval for Admin</label>
+                                        <input type="text" id="approvalStatus" class="form-control" readonly>
+                                        <button type="button" id="confirmButton" class="btn btn-primary mt-2" onclick="requestAdminApproval()">Confirm</button>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="adminApprovalList" style="display: none;">
+                                    <label class="form-label">Admin Approval Requests</label>
+                                    <ul id="approvalRequestsList" class="list-group"></ul>
                                 </div>
                             </div>
-                        </div>
-
+                        </div>                                              
                     </div>
                 </div>
             </div>
         </div>
         <div class="text-right mt-3">
-            <button type="button" class="btn btn-primary">Save changes</button>&nbsp;
-            <button type="button" class="btn btn-default">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="saveChanges()">Save changes</button>&nbsp;
+            <button type="button" class="btn btn-default" onclick="cancelChanges()">Cancel</button>
         </div>
     </div>
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript">
+    <script src="debug.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            const user = users.find(u => u.username === loggedInUser);
+            console.log('Current User:', user);
 
-    </script>
+            if (user) {
+                document.getElementById('username').value = user.username;
+                document.getElementById('email').value = user.email;
+                document.getElementById('currentPassword').value = user.password;
+                
+                const storedImage = user.profileImage || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png";
+                document.getElementById('profileImage').src = storedImage;
+            }
+        });
+
+        function saveChanges() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const loggedInUser = localStorage.getItem('loggedInUser');
+
+            const userIndex = users.findIndex(u => u.username === loggedInUser);
+
+            if (userIndex !== -1) {
+                const updatedUsername = document.getElementById('username').value;
+                const updatedEmail = document.getElementById('email').value;
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const repeatNewPassword = document.getElementById('repeatNewPassword').value;
+
+                if (newPassword && newPassword !== repeatNewPassword) {
+                    alert("New password and repeat new password do not match.");
+                    return;
+                }
+
+                users[userIndex].username = updatedUsername;
+                users[userIndex].email = updatedEmail;
+                users[userIndex].password = newPassword || currentPassword; // Update to new password if provided, else keep current password
+                
+                const profileImage = document.getElementById('profileImage').src;
+                users[userIndex].profileImage = profileImage;
+
+                if (loggedInUser !== updatedUsername) {
+                    localStorage.setItem('loggedInUser', updatedUsername);
+                }
+
+                localStorage.setItem('users', JSON.stringify(users));
+
+                alert("Profile updated successfully.");
+                window.location.href = "homepage.html"; // Redirect to homepage.html after saving changes
+            } else {
+                alert("User not found.");
+            }
+        }
+
+        function cancelChanges() {
+            window.location.href = "homepage.html";
+        }
+
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('profileImage');
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function resetImage() {
+            const defaultImage = "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png";
+            document.getElementById('profileImage').src = defaultImage;
+        }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const loggedInUser = localStorage.getItem('loggedInUser');
+        const user = users.find(u => u.username === loggedInUser);
+
+        if (user) {
+            document.getElementById('username').value = user.username;
+            document.getElementById('email').value = user.email;
+            document.getElementById('currentPassword').value = user.password;
+            document.getElementById('userType').value = capitalizeFirstLetter(user.userType);
+
+            if (user.userType === 'admin') {
+                displayAdminApprovalList();
+                document.getElementById('requestApprovalSection').style.display = 'none';
+            } else {
+                document.getElementById('approvalStatus').value = user.approvalStatus || 'Not requested';
+                if (user.approvalStatus === 'Waiting for confirmation') {
+                    document.getElementById('confirmButton').style.display = 'none';
+                }
+            }
+        }
+    });
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    function requestAdminApproval() {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const loggedInUser = localStorage.getItem('loggedInUser');
+        const userIndex = users.findIndex(u => u.username === loggedInUser);
+
+        if (userIndex !== -1) {
+            users[userIndex].approvalStatus = 'Waiting for confirmation';
+            localStorage.setItem('users', JSON.stringify(users));
+            document.getElementById('approvalStatus').value = 'Waiting for confirmation';
+            document.getElementById('confirmButton').style.display = 'none';
+            alert("Request for admin approval has been submitted.");
+        } else {
+            alert("User not found.");
+        }
+    }
+
+    function displayAdminApprovalList() {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const approvalRequests = users.filter(u => u.approvalStatus === 'Waiting for confirmation');
+
+        const approvalRequestsList = document.getElementById('approvalRequestsList');
+        approvalRequestsList.innerHTML = '';
+
+        if (approvalRequests.length === 0) {
+            const noneItem = document.createElement('li');
+            noneItem.className = 'list-group-item';
+            noneItem.textContent = 'None';
+            approvalRequestsList.appendChild(noneItem);
+        } else {
+            approvalRequests.forEach(user => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                listItem.textContent = user.username;
+                const buttonContainer = document.createElement('div');
+                const approveButton = document.createElement('button');
+                approveButton.className = 'btn btn-success btn-sm';
+                approveButton.textContent = '✔';
+                approveButton.onclick = () => approveAdminRequest(user.username);
+                const rejectButton = document.createElement('button');
+                rejectButton.className = 'btn btn-danger btn-sm ml-2';
+                rejectButton.textContent = '✖';
+                rejectButton.onclick = () => rejectAdminRequest(user.username);
+                buttonContainer.appendChild(approveButton);
+                buttonContainer.appendChild(rejectButton);
+                listItem.appendChild(buttonContainer);
+                approvalRequestsList.appendChild(listItem);
+            });
+        }
+
+        document.getElementById('adminApprovalList').style.display = 'block';
+    }
+
+    function approveAdminRequest(username) {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const userIndex = users.findIndex(u => u.username === username);
+
+        if (userIndex !== -1) {
+            users[userIndex].userType = 'admin';
+            users[userIndex].approvalStatus = '';
+            localStorage.setItem('users', JSON.stringify(users));
+            displayAdminApprovalList();
+            alert(`${username} has been approved as an admin.`);
+        } else {
+            alert("User not found.");
+        }
+    }
+
+    function rejectAdminRequest(username) {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const userIndex = users.findIndex(u => u.username === username);
+
+        if (userIndex !== -1) {
+            users[userIndex].approvalStatus = '';
+            localStorage.setItem('users', JSON.stringify(users));
+            displayAdminApprovalList();
+            alert(`${username}'s request for admin approval has been rejected.`);
+        } else {
+            alert("User not found.");
+        }
+    }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            if (!loggedInUser || loggedInUser === 'Guest') {
+                alert("You must sign in first.");
+                window.location.href = "LoginPage.html";
+            }
+        });
+        
+</script>
+
+    
 </body>
-
 </html>

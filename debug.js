@@ -1,33 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Define the list of users and retrieve stored users
   const defaultUsers = [
-    { username: "Cheson Laud", email: "chesonlaud@gmail.com", password: "hello12345", userType: "admin" }
+    { username: "Chelson Laud", email: "chelsonlaud@gmail.com", password: "hello12345", userType: "admin" }
   ];
 
   const users = JSON.parse(localStorage.getItem('users')) || defaultUsers;
 
-  // Function to handle user login
   function login() {
     const usernameOrEmail = document.querySelector('#login input[type="text"]').value.trim().toLowerCase();
     const password = document.querySelector('#login input[type="password"]').value.trim();
     const userType = document.querySelector('#login input[list="user"]').value.trim().toLowerCase();
 
-    console.log('Entered Username/Email:', usernameOrEmail);
-    console.log('Entered Password:', password);
-    console.log('Entered User Type:', userType);
-
-    const user = users.find(u => (u.username.toLowerCase() === usernameOrEmail || u.email === usernameOrEmail) && u.password === password && u.userType.toLowerCase() === userType);
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => (u.username.toLowerCase() === usernameOrEmail || u.email.toLowerCase() === usernameOrEmail) && u.password === password);
 
     if (user) {
-      alert("Login successful");
-      localStorage.setItem('loggedInUser', user.username); // Store username in localStorage
-      window.location.href = "Homepage.html"; // Redirect to debug.html on successful login
+        if (user.userType.toLowerCase() !== userType) {
+            if (user.userType.toLowerCase() === 'admin' && userType === 'regular') {
+                alert("You are now eligible for Admin. Please change the User Type.");
+            } else if (user.userType.toLowerCase() === 'regular' && userType === 'admin') {
+                alert("You are not eligible for Admin. Please change the User Type to Regular.");
+            }
+        } else {
+            alert("Login successful");
+            localStorage.setItem('loggedInUser', user.username);
+            window.location.href = "homepage.html";
+        }
     } else {
-      alert("Invalid login details");
+        alert("Invalid login details");
     }
   }
 
-  // Function to handle user registration
   function register() {
     const firstName = document.querySelector('#register .input-field[placeholder="Firstname"]').value.trim();
     const lastName = document.querySelector('#register .input-field[placeholder="Lastname"]').value.trim();
@@ -38,31 +40,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const newUser = { username: newUsername, email, password, userType: "regular" };
 
     users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(users)); // Save the updated users list to localStorage
+    localStorage.setItem('users', JSON.stringify(users));
     alert("Registration successful. You can now login.");
   }
 
-  // Function to update navbar with username
   function updateNavbar(username) {
     const profileLinks = document.querySelectorAll('nav .home-link, .dropdown-menu h3');
     profileLinks.forEach(link => link.textContent = username);
   }
 
-  // Function to handle guest login
   function guestLogin() {
     localStorage.setItem('loggedInUser', 'Guest');
-    window.location.href = "Homepage.html"; // Redirect to debug.html for guest user
+    window.location.href = "homepage.html";
   }
 
-  // Bind the functions to the respective buttons
   document.querySelector('#login .submit').addEventListener('click', login);
   document.querySelector('#register .submit').addEventListener('click', register);
-  document.querySelector('#guestLoginBtn').addEventListener('click', guestLogin); // Add event listener for guest login
+  document.querySelector('#guestLoginBtn').addEventListener('click', guestLogin);
 
-  // Other functions
   function myMenuFunction() {
     var i = document.getElementById("navMenu");
-
     if(i.className === "nav-menu") {
         i.className += " responsive";
     } else {
@@ -90,20 +87,26 @@ document.addEventListener('DOMContentLoaded', () => {
     a.className = "btn";
     b.className += " white-btn";
     x.style.opacity = 0;
-      y.style.opacity = 1;
-    }
+    y.style.opacity = 1;
+  }
+
+  a.addEventListener('click', loginTransition);
+  b.addEventListener('click', registerTransition);
+
+  document.getElementById("registerLink").addEventListener('click', (event) => { 
+    event.preventDefault(); 
+    registerTransition(); 
+  }); 
   
-    // Ensure transition functions are attached to buttons
-    a.addEventListener('click', loginTransition);
-    b.addEventListener('click', registerTransition);
-  
-    // Function to reset stored user data
-    function resetStoredData() {
-      localStorage.removeItem('users');
-      alert("Stored data has been reset.");
-    }
-  
-    // Bind reset function to "Reset" link
-    document.querySelector('#login .two a').addEventListener('click', resetStoredData);
+  document.getElementById("loginLink").addEventListener('click', (event) => { 
+    event.preventDefault(); 
+    loginTransition(); 
   });
-  
+
+  function resetStoredData() {
+    localStorage.removeItem('users');
+    alert("Stored data has been reset.");
+  }
+
+  document.querySelector('#login .two a').addEventListener('click', resetStoredData);
+});
