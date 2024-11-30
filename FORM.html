@@ -5,38 +5,220 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create or Edit Your Experience</title>
     <link rel="stylesheet" href="FORM.css">
+    <script type="text/javascript" src="threaduniversal.js" defer></script>
+    <script type="text/javascript" src="debug.js" defer></script>
 </head>
+<style>
+    .header::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 15rem);
+  background-image: radial-gradient(
+      rgba(255, 255, 255, 0),
+      var(--primary-color)
+    ),
+    url("mainimage.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+</style>
 <body>
     <div class="intro">
-        <h1 style="text-align: center; font-size: 40px;">Create or Edit your Experience!</h1>
+        <h1 style="text-align: center; font-size: 40px;">Lagawan Thread Maker</h1>
     </div>
 
-    <div class="container">
+    <div class="twocontainer">
         <div class="form">
-            <h1 style="text-align: center;">Tell us more!</h1>
+            <h1 style="text-align: center;">Add a Header</h1>
             <form id="experienceForm">
-                <label for="name">Insert a province to add to the thread</label>
-                <input type="text" id="name" placeholder="Enter name of province" required>
+                <label for="name">Name of Province:</label>
+                <br>
+                <input type="text" id="name" name="name" placeholder="Enter name of province" required>
+                <br>
+                <br>
+            
+                <label for="description">Signature Catchline:</label>
+                <br>
+                <input type="text" id="description" name="description" placeholder="Provide a short catchline" required>
+                <br>
+                <br>
+            
+                <label for="image">Main Image:</label>
+                <br>
+                <div class="custom-file-container">
+                <input type="file" id="image" name="image" accept="image/*">
+                <label for="image">Upload Image</label>
+                </div>
                 
                 <br>
                 <br>
-
-                <label for="description">Insert a catchline!</label>
-                <input type="text" id="description" placeholder="Provide a brief catchline" required>
-
+                <br>
+            
+                <h2 style="text-align: center;">About their Signature Food</h2>
+                <label for="foodName">Name:</label>
+                <br>
+                <input type="text" id="foodName" name="foodName" placeholder="Enter the name of their food" required>
                 <br>
                 <br>
-
-                <label for="image">Submit an image of that province (Upload Image):</label>
-                <input type="file" id="image" accept="image/*">
+            
+                <label for="foodDescription">Description:</label>
+                <br>
+                <textarea id="foodDescription" name="foodDescription" placeholder="Provide a comprehensive description" required></textarea>
+                <br>
                 
+                <label for="foodImage">Image of Food:</label>
+                <br>
+                <div class="custom-file-container">
+                  <input type="file" id="foodImage" name="foodImage" accept="image/*">
+                  <label for="foodImage">Upload Image</label>
+                </div>
                 <br>
                 <br>
+                <br>
+            
+                <h2 style="text-align: center;">About their Local Culture</h2>
+                <label for="cultureName">Name:</label>
+                <br>
+                <input type="text" id="cultureName" name="cultureName" placeholder="Enter the name of their culture" required>
+                <br>
+                <br>
+            
+                <label for="cultureDescription">Description:</label>
+                <br>
+                <textarea id="cultureDescription" name="cultureDescription" placeholder="Provide a comprehensive description" required></textarea>
+                <br>
+                
+                <label for="cultureImage">Image of their culture:</label>
+                <br>
+                <div class="custom-file-container">
+                  <input type="file" id="cultureImage" name="cultureImage" accept="image/*">
+                  <label for="cultureImage">Upload Image</label>
+                </div>
+                <br>
+                <br>
+                <br>
+
+                
+            
+                <h2 style="text-align: center;">About their Main Attraction</h2>
+                <label for="attractionName">Name:</label>
+                <br>
+                <input type="text" id="attractionName" name="attractionName" placeholder="Enter the name of their attraction" required>
+                <br>
+                <br>
+            
+                <label for="attractionDescription">Description:</label>
+                <br>
+                <textarea id="attractionDescription" name="attractionDescription" placeholder="Provide a comprehensive description" required></textarea>
+                <br>
+                <br>
+    
+                <label for="attractionImage">Image of the Place:</label>
+                <br>
+                <div class="custom-file-container">
+                  <input type="file" id="attractionImage" name="attractionImage" accept="image/*">
+                  <label for="attractionImage">Upload Image</label>
+                </div>
+                <br>
+                <br>
+                <br>
+                
+                <button type="button" id="viewExperience">View Changes Made</button>
+                <button type="button" id="resetExperience">Reset</button>
                 <button type="button" id="submitExperience">Submit</button>
+
             </form>
+            
+        </div>
+        <div class="sample">
+            <div class="intro2">
+                <h1 style="text-align: center; font-size: 30px;">Your thread looks like this</h1>
+            </div>
+            <main class="container">
+                <header class="header" id="home">
+            
+                  <div class="section__container header__container">
+                    <div class="header__content">
+                      <h3 class="section__subheader">Province</h3>
+                      <h1 class="section__header">
+                        Catchline
+                      </h1>
+                      <div class="scroll__btn">
+                        <a href="#about">
+                          Scroll down
+                          <span><i class="ri-arrow-down-line"></i></span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </header>
+                <section class="about">
+                  <div class="section__container about__container">
+                    <div class="about__image about__image-1" id="about">
+                      <img src="sampleimage1.jpg" alt="about" />
+                    </div>
+                    <div class="about__content about__content-1">
+                      <h3 class="section__subheader">FOOD</h3>
+                      <h2 class="section__header">Sample Food</h2>
+                      <p>
+                        Lorem ipsum
+                        <span class="read-more-text">
+                          Extra
+                        </span>
+                      </p>
+                      <div class="about__btn">
+                        <span class="read-more-btn">Read More...</span>
+                      </div>
+                    </div>
+                    
+            
+                    
+                    <div class="about__image about__image-2" id="equipment">
+                      <img src="sampleimage2.jpg" alt="about" />
+                    </div>
+                    <div class="about__content about__content-2">
+                      <h3 class="section__subheader">FESTIVAL</h3>
+                      <h2 class="section__header">Sample Festival</h2>
+                      <p>
+                        Lorem ipsum
+                        <span class="read-more-text">
+                          Extra
+                        </span>
+                      </p>
+                      <div class="about__btn">
+                        <span class="read-more-btn">Read More...</span>
+                      </div>
+                    </div>
+                    
+                    <div class="about__image about__image-3" id="blog">
+                      <img src="sampleimage3.jpg" alt="about" />
+                    </div>
+                    <div class="about__content about__content-3">
+                      <h3 class="section__subheader">ATTRACTION</h3>
+                      <h2 class="section__header">Sample Attraction</h2>
+                      <p>
+                        Lorem ipsum
+                        <span class="read-more-text">
+                          Extra
+                        </span>
+                      </p>
+                      <div class="about__btn">
+                        <span class="read-more-btn">Read More...</span>
+                      </div>
+                    </div>
+                    
+                    
+                  </div>
+                </section>
+                
+                </main>
         </div>
     </div>
-
     <script>
         // Check if editing a slide
         const editSlideData = JSON.parse(localStorage.getItem("editSlide"));
@@ -89,5 +271,8 @@
                 alert("Please fill in all fields and upload an image.");
             }
         });
-    </script>
-</body[_{{{CITATION{{{_1{](https://github.com/EleanorEllingson/web-dev/tree/b2f2a382e77a20fd6895677c8b8f402ac4bae352/7-bank-project%2F1-template-route%2Ftranslations%2FREADME.ko.md)
+
+</script>
+</body>
+</html>
+
