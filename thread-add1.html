@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="threaduniversal.css">
   <script type="text/javascript" src="threaduniversal.js" defer></script>
   <script type="text/javascript" src="debug.js" defer></script>
+  <script type="text/javascript" src="CRUD.js" defer></script>
 </head>
 <style>
    .header::before {
@@ -141,81 +142,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
   <main class="container">
     <header class="header" id="home">
-
-      <div class="section__container header__container">
-        <div class="header__content">
-          <h3 class="section__subheader">Province</h3>
-          <h1 class="section__header">
-            Catchline
-          </h1>
-          <div class="scroll__btn">
-            <a href="#about">
-              Scroll down
-              <span><i class="ri-arrow-down-line"></i></span>
-            </a>
-          </div>
+        <div class="section__container header__container">
+            <div class="header__content">
+                <h3 class="section__subheader">Province</h3>
+                <h1 class="section__header">Catchline</h1>
+            </div>
         </div>
-      </div>
     </header>
     <section class="about">
-      <div class="section__container about__container">
-        <div class="about__image about__image-1" id="about">
-          <img src="sampleimage1.jpg" alt="about" />
-        </div>
-        <div class="about__content about__content-1">
-          <h3 class="section__subheader">FOOD</h3>
-          <h2 class="section__header">Sample Food</h2>
-          <p>
-            Lorem ipsum
-            <span class="read-more-text">
-              Extra
-            </span>
-          </p>
-          <div class="about__btn">
-            <span class="read-more-btn">Read More...</span>
-          </div>
-        </div>
-        
+        <div class="section__container about__container">
+            <div class="about__image about__image-1" id="about">
+                <img src="sampleimage1.jpg" alt="about" />
+            </div>
+            <div class="about__content about__content-1">
+                <h3 class="section__subheader">FOOD</h3>
+                <h2 class="section__header">Sample Food</h2>
+                <p>Lorem ipsum <span class="read-more-text">Extra</span></p>
+            </div>
 
-        
-        <div class="about__image about__image-2" id="equipment">
-          <img src="sampleimage2.jpg" alt="about" />
+            <div class="about__image about__image-2" id="equipment">
+                <img src="sampleimage2.jpg" alt="about" />
+            </div>
+            <div class="about__content about__content-2">
+                <h3 class="section__subheader">FESTIVAL</h3>
+                <h2 class="section__header">Sample Festival</h2>
+                <p>Lorem ipsum <span class="read-more-text">Extra</span></p>
+            </div>
+
+            <div class="about__image about__image-3" id="blog">
+                <img src="sampleimage3.jpg" alt="about" />
+            </div>
+            <div class="about__content about__content-3">
+                <h3 class="section__subheader">ATTRACTION</h3>
+                <h2 class="section__header">Sample Attraction</h2>
+                <p>Lorem ipsum <span class="read-more-text">Extra</span></p>
+            </div>
         </div>
-        <div class="about__content about__content-2">
-          <h3 class="section__subheader">FESTIVAL</h3>
-          <h2 class="section__header">Sample Festival</h2>
-          <p>
-            Lorem ipsum
-            <span class="read-more-text">
-              Extra
-            </span>
-          </p>
-          <div class="about__btn">
-            <span class="read-more-btn">Read More...</span>
-          </div>
-        </div>
-        
-        <div class="about__image about__image-3" id="blog">
-          <img src="sampleimage3.jpg" alt="about" />
-        </div>
-        <div class="about__content about__content-3">
-          <h3 class="section__subheader">ATTRACTION</h3>
-          <h2 class="section__header">Sample Attraction</h2>
-          <p>
-            Lorem ipsum
-            <span class="read-more-text">
-              Extra
-            </span>
-          </p>
-          <div class="about__btn">
-            <span class="read-more-btn">Read More...</span>
-          </div>
-        </div>
-        
-        
-      </div>
     </section>
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const experienceData = JSON.parse(localStorage.getItem("threadAdd1"));
+            console.log("Loaded experience data:", experienceData); // Debugging log
+
+            if (experienceData) {
+                // Update text content
+                document.querySelector('.header .section__subheader').innerText = experienceData.name;
+                document.querySelector('.header .section__header').innerText = experienceData.description;
+
+                // Retrieve images from IndexedDB
+                const image = await getImageFromIndexedDB(experienceData.imageId);
+                const foodImage = await getImageFromIndexedDB(experienceData.foodImageId);
+                const cultureImage = await getImageFromIndexedDB(experienceData.cultureImageId);
+                const attractionImage = await getImageFromIndexedDB(experienceData.attractionImageId);
+
+                // Update main image
+                if (image) {
+                    const styleTag = document.createElement('style');
+                    styleTag.innerHTML = `.header::before { background-image: radial-gradient(rgba(255, 255, 255, 0), var(--primary-color)), url("${image}"); }`;
+                    document.head.appendChild(styleTag);
+                }
+
+                // Update other images
+                if (foodImage) {
+                    document.querySelector('.about__image-1 img').src = foodImage;
+                }
+                if (cultureImage) {
+                    document.querySelector('.about__image-2 img').src = cultureImage;
+                }
+                if (attractionImage) {
+                    document.querySelector('.about__image-3 img').src = attractionImage;
+                }
+
+                // Update additional text content
+                document.querySelector('.about__content-1 .section__header').innerText = experienceData.foodName;
+                document.querySelector('.about__content-1 p').innerHTML = `${experienceData.foodDescription}<span class="read-more-text">Extra</span>`;
+
+                document.querySelector('.about__content-2 .section__header').innerText = experienceData.cultureName;
+                document.querySelector('.about__content-2 p').innerHTML = `${experienceData.cultureDescription}<span class="read-more-text">Extra</span>`;
+
+                document.querySelector('.about__content-3 .section__header').innerText = experienceData.attractionName;
+                document.querySelector('.about__content-3 p').innerHTML = `${experienceData.attractionDescription}<span class="read-more-text">Extra</span>`;
+            }
+        });
+    </script>
     </main>
     </body>
     </html>
+
+    

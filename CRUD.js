@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     let next = document.querySelector('.next');
     let prev = document.querySelector('.prev');
     let deleteButton = document.querySelector('#delete-button');
@@ -25,22 +25,35 @@ document.addEventListener('DOMContentLoaded', function() {
         if (selectedSlide) {
             let slideName = selectedSlide.querySelector('.name').textContent;
             let slideDescription = selectedSlide.querySelector('.des').textContent;
-
+    
             // Remove slide from DOM
             selectedSlide.remove();
-
+    
             // Remove slide from localStorage
             let storedSlides = JSON.parse(localStorage.getItem("slides")) || [];
-            storedSlides = storedSlides.filter(slide => !(slide.name === slideName && slide.description === slideDescription));
+            let slideIndex;
+            storedSlides = storedSlides.filter((slide, index) => {
+                if (slide.name === slideName && slide.description === slideDescription) {
+                    slideIndex = slide.index;
+                    return false;
+                }
+                return true;
+            });
             localStorage.setItem("slides", JSON.stringify(storedSlides)); // Update localStorage
-
+    
+            // Reset the corresponding thread page
+            if (slideIndex) {
+                localStorage.removeItem(`threadAdd${slideIndex}`);
+            }
+    
             // Log current localStorage state
             logLocalStorage();
             showHiddenSlides(); // Ensure visibility is updated
         } else {
             alert('No slide selected to delete.');
         }
-    });
+    });    
+    
 
     editButton.addEventListener('click', function() {
         let selectedSlide = document.querySelector('.slide .item.active');
@@ -84,52 +97,54 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to add a new slide dynamically
-window.addNewSlide = function(name, description, image) {
-    const slideContainer = document.querySelector('.slide'); // Where the slides are displayed
-    const newSlide = document.createElement('div');
-    newSlide.classList.add('item');
-    newSlide.style.backgroundImage = `url(${image})`;
-    newSlide.style.backgroundSize = 'cover'; // Ensure the background covers the whole slide
-    newSlide.style.backgroundPosition = 'center'; // Center the background image
-    newSlide.style.backgroundColor = '#000'; // Ensure solid background
-    newSlide.style.opacity = 1; // Ensure full opacity
+    window.addNewSlide = async function(name, description, imageId) {
+        const slideContainer = document.querySelector('.slide'); // Where the slides are displayed
+        const newSlide = document.createElement('div');
+        newSlide.classList.add('item');
+        const image = await getImageFromIndexedDB(imageId); // Fetch the image from IndexedDB
 
-    const contentDiv = document.createElement('div');
-    contentDiv.classList.add('content');
+        newSlide.style.backgroundImage = `url(${image})`;
+        newSlide.style.backgroundSize = 'cover'; // Ensure the background covers the whole slide
+        newSlide.style.backgroundPosition = 'center'; // Center the background image
+        newSlide.style.backgroundColor = '#000'; // Ensure solid background
+        newSlide.style.opacity = 1; // Ensure full opacity
 
-    const nameDiv = document.createElement('div');
-    nameDiv.classList.add('name');
-    nameDiv.textContent = name;
+        const contentDiv = document.createElement('div');
+        contentDiv.classList.add('content');
 
-    const descDiv = document.createElement('div');
-    descDiv.classList.add('des');
-    descDiv.textContent = description;
+        const nameDiv = document.createElement('div');
+        nameDiv.classList.add('name');
+        nameDiv.textContent = name;
 
-    const button = document.createElement('button');
-    button.textContent = 'See More';
+        const descDiv = document.createElement('div');
+        descDiv.classList.add('des');
+        descDiv.textContent = description;
 
-    contentDiv.appendChild(nameDiv);
-    contentDiv.appendChild(descDiv);
-    contentDiv.appendChild(button);
-    newSlide.appendChild(contentDiv);
+        const button = document.createElement('button');
+        button.textContent = 'See More';
 
-    newSlide.addEventListener('click', function() {
-        newSlide.classList.toggle('active'); // Toggle selection on click
-    });
+        contentDiv.appendChild(nameDiv);
+        contentDiv.appendChild(descDiv);
+        contentDiv.appendChild(button);
+        newSlide.appendChild(contentDiv);
 
-    newSlide.style.display = 'none'; // Initially hide new slides
-    slideContainer.appendChild(newSlide); // Adds the new slide to the carousel
+        newSlide.addEventListener('click', function() {
+            newSlide.classList.toggle('active'); // Toggle selection on click
+        });
 
-    // Log current localStorage state
-    logLocalStorage();
-};
+        newSlide.style.display = 'none'; // Initially hide new slides
+        slideContainer.appendChild(newSlide); // Adds the new slide to the carousel
+
+        // Log current localStorage state
+        logLocalStorage();
+    };
 
     // Function to load slides from localStorage
-    function loadSlides() {
+    async function loadSlides() {
         const storedSlides = JSON.parse(localStorage.getItem("slides")) || [];
-        storedSlides.forEach((slideData, index) => {
-            addNewSlide(slideData.name, slideData.description, slideData.image);
-        });
+        for (const slideData of storedSlides) {
+            await addNewSlide(slideData.name, slideData.description, slideData.imageId);
+        }
         showHiddenSlides(); // Adjust visibility of all slides on load
     }
 
@@ -139,7 +154,7 @@ window.addNewSlide = function(name, description, image) {
     }
 
     // Load existing slides from localStorage
-    loadSlides();
+    await loadSlides();
 
     // Load new slide data from localStorage and add it to the carousel
     const newSlideData = JSON.parse(localStorage.getItem("newSlide"));
@@ -147,39 +162,39 @@ window.addNewSlide = function(name, description, image) {
         let storedSlides = JSON.parse(localStorage.getItem("slides")) || [];
         storedSlides.push(newSlideData); // Add new slide to stored slides
         localStorage.setItem("slides", JSON.stringify(storedSlides)); // Update localStorage
-        addNewSlide(newSlideData.name, newSlideData.description, newSlideData.image);
+        await addNewSlide(newSlideData.name, newSlideData.description, newSlideData.imageId);
         localStorage.removeItem("newSlide"); // Clear data after use
         showHiddenSlides(); // Adjust visibility of all slides
     }
 });
-const toggleButton = document.getElementById('toggle-btn')
-const sidebar = document.getElementById('sidebar')
 
-function toggleSidebar(){
-  sidebar.classList.toggle('close')
-  toggleButton.classList.toggle('rotate')
+const toggleButton = document.getElementById('toggle-btn');
+const sidebar = document.getElementById('sidebar');
 
-  closeAllSubMenus()
+function toggleSidebar() {
+  sidebar.classList.toggle('close');
+  toggleButton.classList.toggle('rotate');
+
+  closeAllSubMenus();
 }
 
-function toggleSubMenu(button){
-
-  if(!button.nextElementSibling.classList.contains('show')){
-    closeAllSubMenus()
+function toggleSubMenu(button) {
+  if (!button.nextElementSibling.classList.contains('show')) {
+    closeAllSubMenus();
   }
 
-  button.nextElementSibling.classList.toggle('show')
-  button.classList.toggle('rotate')
+  button.nextElementSibling.classList.toggle('show');
+  button.classList.toggle('rotate');
 
-  if(sidebar.classList.contains('close')){
-    sidebar.classList.toggle('close')
-    toggleButton.classList.toggle('rotate')
+  if (sidebar.classList.contains('close')) {
+    sidebar.classList.toggle('close');
+    toggleButton.classList.toggle('rotate');
   }
 }
 
-function closeAllSubMenus(){
+function closeAllSubMenus() {
   Array.from(sidebar.getElementsByClassName('show')).forEach(ul => {
-    ul.classList.remove('show')
-    ul.previousElementSibling.classList.remove('rotate')
-  })
+    ul.classList.remove('show');
+    ul.previousElementSibling.classList.remove('rotate');
+  });
 }

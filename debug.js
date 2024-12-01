@@ -30,6 +30,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+/*Code for FORM.html*/
+
+// Form validation function
+function validateForm() {
+  const requiredFields = [
+      'name', 'description', 'foodName', 'foodDescription',
+      'cultureName', 'cultureDescription', 'attractionName', 'attractionDescription'
+  ];
+
+  for (const fieldId of requiredFields) {
+      if (document.getElementById(fieldId).value.trim() === '') {
+          alert('Please fill in all fields and upload an image.');
+          return false;
+      }
+  }
+  return true;
+}
+
   function register() {
     const firstName = document.querySelector('#register .input-field[placeholder="Firstname"]').value.trim();
     const lastName = document.querySelector('#register .input-field[placeholder="Lastname"]').value.trim();
@@ -256,4 +274,222 @@ function resetBackgroundImage(selector) {
 
 function resetImage(selector) {
   document.querySelector(selector).src = 'sampleimage1.jpg';
+}
+
+
+// Open or create the database
+function openDatabase() {
+  return new Promise((resolve, reject) => {
+      const request = indexedDB.open('imagesDatabase', 1);
+      
+      request.onupgradeneeded = function(event) {
+          const db = event.target.result;
+          db.createObjectStore('images', { keyPath: 'id', autoIncrement: true });
+      };
+      
+      request.onsuccess = function(event) {
+          resolve(event.target.result);
+      };
+      
+      request.onerror = function(event) {
+          reject(event.target.error);
+      };
+  });
+}
+
+// Save image to IndexedDB
+function saveImageToIndexedDB(imageData) {
+  return openDatabase().then(db => {
+      return new Promise((resolve, reject) => {
+          const transaction = db.transaction(['images'], 'readwrite');
+          const objectStore = transaction.objectStore('images');
+          const request = objectStore.add({ image: imageData });
+          
+          request.onsuccess = function() {
+              resolve(request.result);
+          };
+          
+          request.onerror = function(event) {
+              reject(event.target.error);
+          };
+      });
+  });
+}
+
+// Retrieve image from IndexedDB
+function getImageFromIndexedDB(id) {
+    return openDatabase().then(db => {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(['images'], 'readonly');
+            const objectStore = transaction.objectStore('images');
+            const request = objectStore.get(id);
+            
+            request.onsuccess = function(event) {
+                resolve(event.target.result.image);
+            };
+            
+            request.onerror = function(event) {
+                reject(event.target.error);
+            };
+        });
+    });
+}
+
+
+
+// Check if editing a slide
+const editSlideData = JSON.parse(localStorage.getItem("editSlide"));
+if (editSlideData) {
+    document.getElementById("name").value = editSlideData.name;
+    document.getElementById("description").value = editSlideData.description;
+    // Display current image (optional): You might display the current image or notify the user that the existing image will be used if no new image is uploaded
+}
+
+document.getElementById("submitExperience").addEventListener("click", async function() {
+  const name = document.getElementById("name").value;
+  const description = document.getElementById("description").value;
+  const foodName = document.getElementById("foodName").value;
+  const foodDescription = document.getElementById("foodDescription").value;
+  const cultureName = document.getElementById("cultureName").value;
+  const cultureDescription = document.getElementById("cultureDescription").value;
+  const attractionName = document.getElementById("attractionName").value;
+  const attractionDescription = document.getElementById("attractionDescription").value;
+  const imageInput = document.getElementById("image");
+  const foodImageInput = document.getElementById("foodImage");
+  const cultureImageInput = document.getElementById("cultureImage");
+  const attractionImageInput = document.getElementById("attractionImage");
+
+  // Validate form inputs
+  if (!validateForm()) return;
+
+  // Check if maximum slides limit reached
+  let storedSlides = JSON.parse(localStorage.getItem("slides")) || [];
+  if (storedSlides.length >= 5) {
+      alert('You have reached the maximum limit of 5 slides.');
+      return;
+  }
+
+  // Validate that all images are uploaded
+  if (imageInput.files.length === 0 || foodImageInput.files.length === 0 || cultureImageInput.files.length === 0 || attractionImageInput.files.length === 0) {
+      alert('Please upload all required images.');
+      return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = async function(event) {
+      const image = await compressImage(event.target.result);
+      const imageId = await saveImageToIndexedDB(image);
+      const foodReader = new FileReader();
+      foodReader.onload = async function(foodEvent) {
+          const foodImage = await compressImage(foodEvent.target.result);
+          const foodImageId = await saveImageToIndexedDB(foodImage);
+
+          const cultureReader = new FileReader();
+          cultureReader.onload = async function(cultureEvent) {
+              const cultureImage = await compressImage(cultureEvent.target.result);
+              const cultureImageId = await saveImageToIndexedDB(cultureImage);
+
+              const attractionReader = new FileReader();
+              attractionReader.onload = async function(attractionEvent) {
+                  const attractionImage = await compressImage(attractionEvent.target.result);
+                  const attractionImageId = await saveImageToIndexedDB(attractionImage);
+
+                  // Store slide and thread data in localStorage
+                  const experienceData = {
+                      name, description, imageId,
+                      foodName, foodDescription, foodImageId,
+                      cultureName, cultureDescription, cultureImageId,
+                      attractionName, attractionDescription, attractionImageId
+                  };
+
+                  // Determine the next available thread index
+                  let nextIndex = 1;
+                  
+                  // Find the first available index
+                  for (let i = 1; i <= 5; i++) {
+                      if (!storedSlides.some(slide => slide.index === i)) {
+                          nextIndex = i;
+                          break;
+                      }
+                  }
+                  
+                  console.log("Stored slides before adding new one:", storedSlides);
+                  console.log("Next index for new slide:", nextIndex);
+
+                  storedSlides.push({ ...experienceData, index: nextIndex });
+                  localStorage.setItem("slides", JSON.stringify(storedSlides));
+                  localStorage.setItem(`threadAdd${nextIndex}`, JSON.stringify(experienceData)); // Save to localStorage
+
+                  // Log updated localStorage state
+                  console.log("Stored slides after adding new one:", JSON.parse(localStorage.getItem("slides")));
+                  console.log("Stored experience data for threadAdd" + nextIndex, JSON.parse(localStorage.getItem(`threadAdd${nextIndex}`)));
+
+                  // Reset form
+                  document.getElementById('experienceForm').reset();
+                  
+                  // Redirect to the corresponding thread page
+                  window.location.href = `CRUD.html`;
+              };
+
+              if (attractionImageInput.files.length > 0) {
+                  attractionReader.readAsDataURL(attractionImageInput.files[0]);
+              }
+          };
+
+          if (cultureImageInput.files.length > 0) {
+              cultureReader.readAsDataURL(cultureImageInput.files[0]);
+          }
+      };
+
+      if (foodImageInput.files.length > 0) {
+          foodReader.readAsDataURL(foodImageInput.files[0]);
+      }
+  };
+
+  if (imageInput.files.length > 0) {
+      reader.readAsDataURL(imageInput.files[0]);
+  }
+});
+
+// Helper function to compress images
+function compressImage(imageData) {
+  return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      const img = new Image();
+      img.src = imageData;
+
+      img.onload = () => {
+          const width = img.width;
+          const height = img.height;
+
+          // Set the canvas dimensions to the image dimensions
+          canvas.width = width;
+          canvas.height = height;
+
+          // Draw the image onto the canvas
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Compress the image to reduce its size (adjust quality as needed)
+          const compressedImage = canvas.toDataURL('image/jpeg', 0.7); // Change quality here
+          resolve(compressedImage);
+      };
+  });
+}
+
+
+// Form validation function
+function validateForm() {
+    const requiredFields = [
+        'name', 'description', 'foodName', 'foodDescription',
+        'cultureName', 'cultureDescription', 'attractionName', 'attractionDescription'
+    ];
+
+    for (const fieldId of requiredFields) {
+        if (document.getElementById(fieldId).value.trim() === '') {
+            alert('Please fill in all fields.');
+            return false;
+        }
+    }
+    return true;
 }

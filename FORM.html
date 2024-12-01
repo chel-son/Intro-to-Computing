@@ -219,60 +219,7 @@
                 </main>
         </div>
     </div>
-    <script>
-        // Check if editing a slide
-        const editSlideData = JSON.parse(localStorage.getItem("editSlide"));
-        if (editSlideData) {
-            document.getElementById("name").value = editSlideData.name;
-            document.getElementById("description").value = editSlideData.description;
-            // Display current image (optional): You might display the current image or notify the user that the existing image will be used if no new image is uploaded
-        }
 
-        document.getElementById("submitExperience").addEventListener("click", function() {
-            const name = document.getElementById("name").value;
-            const description = document.getElementById("description").value;
-            const imageInput = document.getElementById("image");
-
-            if (name && description && (editSlideData || imageInput.files.length > 0)) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    let image = editSlideData ? editSlideData.image : event.target.result;
-                    if (imageInput.files.length > 0) {
-                        image = event.target.result;
-                    }
-
-                    // Store data in localStorage
-                    const experienceData = { name, description, image };
-                    let storedSlides = JSON.parse(localStorage.getItem("slides")) || [];
-                    
-                    // If editing, replace the existing slide
-                    if (editSlideData) {
-                        storedSlides = storedSlides.map(slide => 
-                            slide.name === editSlideData.name && slide.description === editSlideData.description 
-                            ? experienceData 
-                            : slide
-                        );
-                        localStorage.removeItem("editSlide");
-                    } else {
-                        storedSlides.push(experienceData); // Add new slide to stored slides
-                    }
-                    localStorage.setItem("slides", JSON.stringify(storedSlides)); // Update localStorage
-
-                    // Redirect to CRUD.html
-                    window.location.href = "CRUD.html";
-                };
-
-                if (imageInput.files.length > 0) {
-                    reader.readAsDataURL(imageInput.files[0]);
-                } else {
-                    reader.onload();
-                }
-            } else {
-                alert("Please fill in all fields and upload an image.");
-            }
-        });
-
-</script>
 </body>
 </html>
 
