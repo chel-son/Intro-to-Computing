@@ -47,6 +47,30 @@ document.querySelectorAll('.about__btn').forEach(btn => {
   });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  const subMenu = document.querySelector('.sub-menu div');
 
+  function addSubMenuItem(name, url) {
+      const newListItem = document.createElement('li');
+      const newLink = document.createElement('a');
+      newLink.href = url;
+      newLink.textContent = name;
+      newListItem.appendChild(newLink);
+      subMenu.appendChild(newListItem);
+  }
 
+  function loadSidebarItems() {
+      const keys = Object.keys(localStorage).filter(key => key.startsWith('threadAdd'));
+      keys.sort((a, b) => a.localeCompare(b)); // Sort keys to ensure the correct order
 
+      keys.forEach(key => {
+          const item = JSON.parse(localStorage.getItem(key));
+          if (item && item.name) {
+              const url = `thread-add${key.replace('threadAdd', '')}.html`;
+              addSubMenuItem(item.name, url);
+          }
+      });
+  }
+
+  loadSidebarItems();
+});
