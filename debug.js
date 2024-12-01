@@ -345,7 +345,9 @@ if (editSlideData) {
     // Display current image (optional): You might display the current image or notify the user that the existing image will be used if no new image is uploaded
 }
 
-document.getElementById("submitExperience").addEventListener("click", async function() {
+document.getElementById("submitExperience").addEventListener("click", async function(event) {
+  event.preventDefault(); // Prevent default form submission
+
   const name = document.getElementById("name").value;
   const description = document.getElementById("description").value;
   const foodName = document.getElementById("foodName").value;
@@ -404,15 +406,12 @@ document.getElementById("submitExperience").addEventListener("click", async func
 
                   // Determine the next available thread index
                   let nextIndex = 1;
-                  
-                  // Find the first available index
                   for (let i = 1; i <= 5; i++) {
                       if (!storedSlides.some(slide => slide.index === i)) {
                           nextIndex = i;
                           break;
                       }
                   }
-                  
                   console.log("Stored slides before adding new one:", storedSlides);
                   console.log("Next index for new slide:", nextIndex);
 
@@ -424,9 +423,19 @@ document.getElementById("submitExperience").addEventListener("click", async func
                   console.log("Stored slides after adding new one:", JSON.parse(localStorage.getItem("slides")));
                   console.log("Stored experience data for threadAdd" + nextIndex, JSON.parse(localStorage.getItem(`threadAdd${nextIndex}`)));
 
+                  // Clear form data from localStorage
+                  localStorage.removeItem('name');
+                  localStorage.removeItem('description');
+                  localStorage.removeItem('foodName');
+                  localStorage.removeItem('foodDescription');
+                  localStorage.removeItem('cultureName');
+                  localStorage.removeItem('cultureDescription');
+                  localStorage.removeItem('attractionName');
+                  localStorage.removeItem('attractionDescription');
+
                   // Reset form
                   document.getElementById('experienceForm').reset();
-                  
+
                   // Redirect to the corresponding thread page
                   window.location.href = `CRUD.html`;
               };
@@ -477,7 +486,6 @@ function compressImage(imageData) {
   });
 }
 
-
 // Form validation function
 function validateForm() {
     const requiredFields = [
@@ -493,4 +501,8 @@ function validateForm() {
     }
     return true;
 }
+
+// Load form data on page load
+window.addEventListener('load', loadFormData);
+
 
