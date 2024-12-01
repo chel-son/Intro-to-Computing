@@ -238,7 +238,7 @@
     box-sizing: border-box;
     height: 100vh;
     width: 250px;
-    padding: 200px 1em;
+    padding: 100px 1em;
     background-color: var(--base-clr);
     border-right: 1px solid var(--line-clr);
     position: sticky;
@@ -250,7 +250,7 @@
   }
   
   #sidebar.close {
-    padding: 200px 0.45em;
+    padding: 100px 0.45em;
     width: 60px;
   }
   
