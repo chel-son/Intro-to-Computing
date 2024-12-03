@@ -9,6 +9,10 @@
   <script type="text/javascript" src="debug.js" defer></script>
   <script type="text/javascript" src="CRUD.js" defer></script>
   <script type="text/javascript" src="comments/comment5.js" defer></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <link rel="stylesheet" href="Notification.css"/>
+  <link rel="stylesheet" href="Antinotification.css"/>
 </head>
 <style>
    .header::before {
@@ -303,11 +307,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     </script>
-</body>
-</html>
-
-    
     </main>
+
+    <div class="toast">
+      <div class="toast-content">
+        <i class="fas fa-solid fa-check check"></i>
+        <div class="message">
+          <span class="text text-1">Success</span>
+          <span class="text text-2">Your profile has been updated</span>
+        </div>
+      </div>
+      <i class="fa-solid fa-xmark close"></i>
+      <div class="progress"></div>
+    </div>
+    
+    <div class="toasty">
+      <div class="toasty-content">
+        <i class="fa-solid fa-x check"></i>
+        <div class="message">
+          <span class="text text-1">Notice</span>
+          <span class="text text-2"></span>
+        </div>
+      </div>
+      <i class="fa-solid fa-xmark close"></i>
+      <div class="progress"></div>
+    </div>
     </body>
     </html>
 

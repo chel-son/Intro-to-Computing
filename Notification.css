@@ -7,18 +7,9 @@
       
 }
 
-body{
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f2f2f2;
-    overflow: hidden;
-}
-
 .toast {
-    position: absolute;
-    top: 25px;
+    position: fixed;
+    top: 110px;
     right: 30px;
     border-radius: 12px;
     background: #fff;
@@ -28,6 +19,7 @@ body{
     overflow: hidden;
     transform: translateX(calc(100% + 30px));
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+    z-index: 100000;
   }
   
   .toast.active {
@@ -116,20 +108,4 @@ body{
     }
   }
   
-  button {
-    padding: 10px 20px;
-    font-size: 20px;
-    outline: none;
-    border: none;
-    background-color: #4070f4;
-    color: #fff;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  button:hover {
-    background-color: #0e4bf1;
-    transform: scale(1.05);
-  }
   

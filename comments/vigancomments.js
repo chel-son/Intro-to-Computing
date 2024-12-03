@@ -63,6 +63,8 @@ function addComment() {
             userLocationInput.value = '';
             commentInput.value = '';
             showSlide(currentIndex);
+
+            showNotification("You added a comment.", 'blue'); // Added notification
         };
         reader.readAsDataURL(backgroundInput.files[0]);
     }
@@ -152,6 +154,7 @@ function saveEditComment() {
                     comments[commentIndex].profileImage = profileImage;
                     localStorage.setItem('vigancomments', JSON.stringify(comments));
                     loadComments();
+                    showNotification("You edited a comment.", 'blue'); // Added notification
                 };
                 reader.readAsDataURL(backgroundInput.files[0]);
             } else {
@@ -161,6 +164,7 @@ function saveEditComment() {
                 comments[commentIndex].profileImage = profileImage;
                 localStorage.setItem('vigancomments', JSON.stringify(comments));
                 loadComments();
+                showNotification("You edited a comment.", 'blue'); // Added notification
             }
         }
 
@@ -176,6 +180,7 @@ function deleteComment(timestamp) {
     comments = comments.filter(comment => comment.timestamp !== timestamp);
     localStorage.setItem('vigancomments', JSON.stringify(comments));
     loadComments();
+    showNotification("You deleted a comment.", 'red'); // Added notification
 }
 
 function loadComments() {

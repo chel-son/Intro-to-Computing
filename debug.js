@@ -1,9 +1,42 @@
+function showNotification(message, type) {
+  const notification = type === 'blue' ? document.querySelector('.toast') : document.querySelector('.toasty');
+  const progress = notification.querySelector('.progress');
+  const messageText = notification.querySelector('.text-2');
+  const closeIcon = notification.querySelector('.close');
+
+  return new Promise((resolve) => {
+    messageText.textContent = message;
+
+    notification.classList.add('active');
+    progress.classList.add('active');
+
+    progress.addEventListener('animationend', () => {
+      notification.classList.add('hide');
+      setTimeout(() => {
+        notification.classList.remove('active', 'hide');
+        progress.classList.remove('active');
+        resolve();
+      }, 500);
+    }, { once: true });
+
+    closeIcon.addEventListener('click', () => {
+      notification.classList.add('hide');
+      setTimeout(() => {
+        notification.classList.remove('active', 'hide');
+        progress.classList.remove('active');
+        resolve();
+      }, 500);
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const defaultUsers = [
     { username: "Chelson Laud", email: "chelsonlaud@gmail.com", password: "hello12345", userType: "admin" }
   ];
 
   const users = JSON.parse(localStorage.getItem('users')) || defaultUsers;
+
 
   function login() {
     const usernameOrEmail = document.querySelector('#login input[type="text"]').value.trim().toLowerCase();
@@ -13,68 +46,66 @@ document.addEventListener('DOMContentLoaded', () => {
     const users = JSON.parse(localStorage.getItem('users')) || [];
     const user = users.find(u => (u.username.toLowerCase() === usernameOrEmail || u.email.toLowerCase() === usernameOrEmail) && u.password === password);
 
+
+    
+  
     if (user) {
-        if (user.userType.toLowerCase() !== userType) {
-            if (user.userType.toLowerCase() === 'admin' && userType === 'regular') {
-                alert("You are now eligible for Admin. Please change the User Type.");
-            } else if (user.userType.toLowerCase() === 'regular' && userType === 'admin') {
-                alert("You are not eligible for Admin. Please change the User Type to Regular.");
-            }
-        } else {
-            alert("Login successful");
-            localStorage.setItem('loggedInUser', user.username);
-            window.location.href = "Loading.html";
+      if (user.userType.toLowerCase() !== userType) {
+        if (user.userType.toLowerCase() === 'admin' && userType === 'regular') {
+          showNotification("You are now eligible for Admin. Please change the User Type.", 'red');
+        } else if (user.userType.toLowerCase() === 'regular' && userType === 'admin') {
+          showNotification("You are not eligible for Admin. Please change the User Type to Regular.", 'red');
         }
+      } else {
+        showNotification("Login successful. You are about to enter Lagawan", 'blue').then(() => {
+          localStorage.setItem('loggedInUser', user.username);
+          window.location.href = "Loading.html";
+        });
+      }
     } else {
-        alert("Invalid login details");
+      showNotification("Invalid login details", 'red');
     }
+    
+    
   }
+
 
 /*Code for FORM.html*/
 
-// Form validation function
-function validateForm() {
-  const requiredFields = [
-      'name', 'description', 'foodName', 'foodDescription',
-      'cultureName', 'cultureDescription', 'attractionName', 'attractionDescription'
-  ];
 
-  for (const fieldId of requiredFields) {
-      if (document.getElementById(fieldId).value.trim() === '') {
-          alert('Please fill in all fields and upload an image.');
-          return false;
-      }
-  }
-  return true;
+function register() {
+  const firstName = document.querySelector('#register .input-field[placeholder="Firstname"]').value.trim();
+  const lastName = document.querySelector('#register .input-field[placeholder="Lastname"]').value.trim();
+  const email = document.querySelector('#register .input-field[placeholder="Email"]').value.trim();
+  const password = document.querySelector('#register .input-field[placeholder="Password"]').value.trim();
+  
+  const newUsername = `${firstName} ${lastName}`;
+  const newUser = { username: newUsername, email, password, userType: "regular" };
+
+  users.push(newUser);
+  localStorage.setItem('users', JSON.stringify(users));
+  showNotification("Registration successful. You can now login.", 'blue').then(() => {
+  });
 }
 
-  function register() {
-    const firstName = document.querySelector('#register .input-field[placeholder="Firstname"]').value.trim();
-    const lastName = document.querySelector('#register .input-field[placeholder="Lastname"]').value.trim();
-    const email = document.querySelector('#register .input-field[placeholder="Email"]').value.trim();
-    const password = document.querySelector('#register .input-field[placeholder="Password"]').value.trim();
-    
-    const newUsername = `${firstName} ${lastName}`;
-    const newUser = { username: newUsername, email, password, userType: "regular" };
-
-    users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(users));
-    alert("Registration successful. You can now login.");
-  }
 
   function updateNavbar(username) {
     const profileLinks = document.querySelectorAll('nav .home-link, .dropdown-menu h3');
     profileLinks.forEach(link => link.textContent = username);
   }
 
-  function guestLogin() {
+// Assuming showNotification is already defined earlier in your script
+function guestLogin() {
+  showNotification("Signing in as Guest. You are about to enter Lagawan", 'blue').then(() => {
     localStorage.setItem('loggedInUser', 'Guest');
     window.location.href = "Loading.html";
-  }
+  });
+}
 
-  document.querySelector('#login .submit').addEventListener('click', login);
-  document.querySelector('#register .submit').addEventListener('click', register);
-  document.querySelector('#guestLoginBtn').addEventListener('click', guestLogin);
+document.querySelector('#login .submit').addEventListener('click', login);
+document.querySelector('#register .submit').addEventListener('click', register);
+document.querySelector('#guestLoginBtn').addEventListener('click', guestLogin);
+
 
   function myMenuFunction() {
     var i = document.getElementById("navMenu");
@@ -364,18 +395,20 @@ document.getElementById("submitExperience").addEventListener("click", async func
   // Validate form inputs
   if (!validateForm()) return;
 
-  // Check if maximum slides limit reached
-  let storedSlides = JSON.parse(localStorage.getItem("slides")) || [];
-  if (storedSlides.length >= 5) {
-      alert('You have reached the maximum limit of 5 slides.');
-      return;
-  }
 
-  // Validate that all images are uploaded
-  if (imageInput.files.length === 0 || foodImageInput.files.length === 0 || cultureImageInput.files.length === 0 || attractionImageInput.files.length === 0) {
-      alert('Please upload all required images.');
-      return;
-  }
+// Check if maximum slides limit reached
+let storedSlides = JSON.parse(localStorage.getItem("slides")) || [];
+if (storedSlides.length >= 5) {
+  showNotification('You have reached the maximum limit of 5 slides.', 'red');
+  return;
+}
+
+// Validate that all images are uploaded
+if (imageInput.files.length === 0 || foodImageInput.files.length === 0 || cultureImageInput.files.length === 0 || attractionImageInput.files.length === 0) {
+  showNotification('Please upload all required images.', 'red');
+  return;
+}
+
 
   const reader = new FileReader();
   reader.onload = async function(event) {
@@ -393,52 +426,56 @@ document.getElementById("submitExperience").addEventListener("click", async func
 
               const attractionReader = new FileReader();
               attractionReader.onload = async function(attractionEvent) {
-                  const attractionImage = await compressImage(attractionEvent.target.result);
-                  const attractionImageId = await saveImageToIndexedDB(attractionImage);
-
-                  // Store slide and thread data in localStorage
-                  const experienceData = {
-                      name, description, imageId,
-                      foodName, foodDescription, foodImageId,
-                      cultureName, cultureDescription, cultureImageId,
-                      attractionName, attractionDescription, attractionImageId
-                  };
-
-                  // Determine the next available thread index
-                  let nextIndex = 1;
-                  for (let i = 1; i <= 5; i++) {
-                      if (!storedSlides.some(slide => slide.index === i)) {
-                          nextIndex = i;
-                          break;
-                      }
+                const attractionImage = await compressImage(attractionEvent.target.result);
+                const attractionImageId = await saveImageToIndexedDB(attractionImage);
+              
+                // Store slide and thread data in localStorage
+                const experienceData = {
+                  name, description, imageId,
+                  foodName, foodDescription, foodImageId,
+                  cultureName, cultureDescription, cultureImageId,
+                  attractionName, attractionDescription, attractionImageId
+                };
+              
+                // Determine the next available thread index
+                let nextIndex = 1;
+                for (let i = 1; i <= 5; i++) {
+                  if (!storedSlides.some(slide => slide.index === i)) {
+                    nextIndex = i;
+                    break;
                   }
-                  console.log("Stored slides before adding new one:", storedSlides);
-                  console.log("Next index for new slide:", nextIndex);
-
-                  storedSlides.push({ ...experienceData, index: nextIndex });
-                  localStorage.setItem("slides", JSON.stringify(storedSlides));
-                  localStorage.setItem(`threadAdd${nextIndex}`, JSON.stringify(experienceData)); // Save to localStorage
-
-                  // Log updated localStorage state
-                  console.log("Stored slides after adding new one:", JSON.parse(localStorage.getItem("slides")));
-                  console.log("Stored experience data for threadAdd" + nextIndex, JSON.parse(localStorage.getItem(`threadAdd${nextIndex}`)));
-
-                  // Clear form data from localStorage
-                  localStorage.removeItem('name');
-                  localStorage.removeItem('description');
-                  localStorage.removeItem('foodName');
-                  localStorage.removeItem('foodDescription');
-                  localStorage.removeItem('cultureName');
-                  localStorage.removeItem('cultureDescription');
-                  localStorage.removeItem('attractionName');
-                  localStorage.removeItem('attractionDescription');
-
-                  // Reset form
-                  document.getElementById('experienceForm').reset();
-
-                  // Redirect to the corresponding thread page
-                  window.location.href = `CRUD.html`;
+                }
+                console.log("Stored slides before adding new one:", storedSlides);
+                console.log("Next index for new slide:", nextIndex);
+              
+                storedSlides.push({ ...experienceData, index: nextIndex });
+                localStorage.setItem("slides", JSON.stringify(storedSlides));
+                localStorage.setItem(`threadAdd${nextIndex}`, JSON.stringify(experienceData)); // Save to localStorage
+              
+                // Log updated localStorage state
+                console.log("Stored slides after adding new one:", JSON.parse(localStorage.getItem("slides")));
+                console.log("Stored experience data for threadAdd" + nextIndex, JSON.parse(localStorage.getItem(`threadAdd${nextIndex}`)));
+              
+                // Clear form data from localStorage
+                localStorage.removeItem('name');
+                localStorage.removeItem('description');
+                localStorage.removeItem('foodName');
+                localStorage.removeItem('foodDescription');
+                localStorage.removeItem('cultureName');
+                localStorage.removeItem('cultureDescription');
+                localStorage.removeItem('attractionName');
+                localStorage.removeItem('attractionDescription');
+              
+                // Set a flag to show notification on CRUD.html
+                localStorage.setItem('showNotification', 'true');
+              
+                // Reset form
+                document.getElementById('experienceForm').reset();
+              
+                // Redirect to the corresponding thread page
+                window.location.href = `CRUD.html`;
               };
+              
 
               if (attractionImageInput.files.length > 0) {
                   attractionReader.readAsDataURL(attractionImageInput.files[0]);
@@ -488,18 +525,18 @@ function compressImage(imageData) {
 
 // Form validation function
 function validateForm() {
-    const requiredFields = [
-        'name', 'description', 'foodName', 'foodDescription',
-        'cultureName', 'cultureDescription', 'attractionName', 'attractionDescription'
-    ];
+  const requiredFields = [
+    'name', 'description', 'foodName', 'foodDescription',
+    'cultureName', 'cultureDescription', 'attractionName', 'attractionDescription'
+  ];
 
-    for (const fieldId of requiredFields) {
-        if (document.getElementById(fieldId).value.trim() === '') {
-            alert('Please fill in all fields.');
-            return false;
-        }
+  for (const fieldId of requiredFields) {
+    if (document.getElementById(fieldId).value.trim() === '') {
+      showNotification('Please fill in all fields and upload an image.', 'red');
+      return false;
     }
-    return true;
+  }
+  return true;
 }
 
 // Load form data on page load

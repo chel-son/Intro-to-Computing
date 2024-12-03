@@ -1,58 +1,65 @@
-document.addEventListener('DOMContentLoaded', async function() {
+
+
+  document.addEventListener('DOMContentLoaded', async function() {
     let next = document.querySelector('.next');
     let prev = document.querySelector('.prev');
     let deleteButton = document.querySelector('#delete-button');
     let editButton = document.querySelector('.icon-button.edit'); // Edit button
-
+  
     next.addEventListener('click', function() {
-        let items = document.querySelectorAll('.item');
-        items[4].style.display = 'none'; // Hide the 4th slide before moving it
-        document.querySelector('.slide').appendChild(items[0]);
-        disableButtons();
-        showHiddenSlides(); // Show the hidden slides when navigation occurs
+      let items = document.querySelectorAll('.item');
+      items[4].style.display = 'none'; // Hide the 4th slide before moving it
+      document.querySelector('.slide').appendChild(items[0]);
+      disableButtons();
+      showHiddenSlides(); // Show the hidden slides when navigation occurs
     });
-
+  
     prev.addEventListener('click', function() {
-        let items = document.querySelectorAll('.item');
-        items[4].style.display = 'none'; // Hide the 4th slide before moving it
-        document.querySelector('.slide').prepend(items[items.length - 1]);
-        disableButtons();
-        showHiddenSlides(); // Show the hidden slides when navigation occurs
+      let items = document.querySelectorAll('.item');
+      items[4].style.display = 'none'; // Hide the 4th slide before moving it
+      document.querySelector('.slide').prepend(items[items.length - 1]);
+      disableButtons();
+      showHiddenSlides(); // Show the hidden slides when navigation occurs
     });
-
+  
     deleteButton.addEventListener('click', function() {
-        let selectedSlide = document.querySelector('.slide .item.active');
-        if (selectedSlide) {
-            let slideName = selectedSlide.querySelector('.name').textContent;
-            let slideDescription = selectedSlide.querySelector('.des').textContent;
-    
-            // Remove slide from DOM
-            selectedSlide.remove();
-    
-            // Remove slide from localStorage
-            let storedSlides = JSON.parse(localStorage.getItem("slides")) || [];
-            let slideIndex;
-            storedSlides = storedSlides.filter((slide, index) => {
-                if (slide.name === slideName && slide.description === slideDescription) {
-                    slideIndex = slide.index;
-                    return false;
-                }
-                return true;
-            });
-            localStorage.setItem("slides", JSON.stringify(storedSlides)); // Update localStorage
-    
-            // Reset the corresponding thread page
-            if (slideIndex) {
-                localStorage.removeItem(`threadAdd${slideIndex}`);
-            }
-    
-            // Log current localStorage state
-            logLocalStorage();
-            showHiddenSlides(); // Ensure visibility is updated
-        } else {
-            alert('No slide selected to delete.');
+      let selectedSlide = document.querySelector('.slide .item.active');
+      if (selectedSlide) {
+        let slideName = selectedSlide.querySelector('.name').textContent;
+        let slideDescription = selectedSlide.querySelector('.des').textContent;
+  
+        // Remove slide from DOM
+        selectedSlide.remove();
+  
+        // Remove slide from localStorage
+        let storedSlides = JSON.parse(localStorage.getItem("slides")) || [];
+        let slideIndex;
+        storedSlides = storedSlides.filter((slide, index) => {
+          if (slide.name === slideName && slide.description === slideDescription) {
+            slideIndex = slide.index;
+            return false;
+          }
+          return true;
+        });
+        localStorage.setItem("slides", JSON.stringify(storedSlides)); // Update localStorage
+  
+        // Reset the corresponding thread page
+        if (slideIndex) {
+          localStorage.removeItem(`threadAdd${slideIndex}`);
         }
-    });    
+  
+        // Log current localStorage state
+        logLocalStorage();
+        showHiddenSlides(); // Ensure visibility is updated
+  
+        // Show notification for successful deletion
+        showNotification('You deleted a thread.', 'red');
+      } else {
+        // Show notification for no slide selected
+        showNotification('No slide selected to delete.', 'red');
+      }
+    });
+          
     
 
     editButton.addEventListener('click', function() {
@@ -226,6 +233,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loadSidebarItems();
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('showNotification') === 'true') {
+      showNotification('You added a thread', 'blue').then(() => {
+        // Clear the flag from localStorage
+        localStorage.removeItem('showNotification');
+      });
+    }
+  });
 
 //pre-loader
 

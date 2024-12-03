@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="FORM.css">
     <script type="text/javascript" src="thread-main.js" defer></script>
     <script type="text/javascript" src="debug.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+    <link rel="stylesheet" href="Notification.css"/>
+    <link rel="stylesheet" href="Antinotification.css"/>
 </head>
 <style>
     .header::before {
@@ -220,6 +224,35 @@
                 </main>
         </div>
     </div>
+
+    <!-- Blue Toast Notification -->
+<div class="toast">
+  <div class="toast-content">
+    <i class="fas fa-solid fa-check check"></i>
+    <div class="message">
+      <span class="text text-1">Success</span>
+      <span class="text text-2">Your changes have been saved</span>
+    </div>
+  </div>
+  <i class="fa-solid fa-xmark close"></i>
+  <div class="progress"></div>
+</div>
+
+<!-- Red Toast Notification -->
+<div class="toasty">
+  <div class="toasty-content">
+    <i class="fa-solid fa-x check"></i>
+    <div class="message">
+      <span class="text text-1">Notice</span>
+      <span class="text text-2">Your changes have been saved</span>
+    </div>
+  </div>
+  <i class="fa-solid fa-xmark close"></i>
+  <div class="progress"></div>
+</div>
+
+<script src="Notification.js"></script>
+<script src="Antinotification.js"></script>
 
 </body>
 </html>
