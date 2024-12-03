@@ -8,6 +8,11 @@
     <script type="text/javascript" src="debug.js" defer></script>
 </head>
 <body>
+
+    <div id="pre-loader"></div>
+
+
+
     <nav id="navbar">
         <input type="checkbox" id="sidebar-active">
         <label for="sidebar-active" class="open-sidebar-button">
@@ -61,6 +66,14 @@
             }
         }
         updateNavbar();
+
+        var loader = document.getElementById("pre-loader");
+            window.addEventListener("load", function() {
+            setTimeout(function() {
+            loader.style.display = "none";
+            }, 1500);
+        });
+
     </script>
 
 

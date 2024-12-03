@@ -187,3 +187,12 @@ nav svg {
   font-weight: 600;
 
 }
+
+#pre-loader {
+  background: #11121a url("images/reload.gif") no-repeat center center;
+  background-size: 10%;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+}

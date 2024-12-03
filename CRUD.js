@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         descDiv.textContent = description;
 
         const button = document.createElement('button');
-        button.textContent = 'See More';
+        button.textContent = 'Explore';
 
         contentDiv.appendChild(nameDiv);
         contentDiv.appendChild(descDiv);
@@ -225,4 +225,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     loadSidebarItems();
+});
+
+//pre-loader
+
+var loader = document.getElementById("pre-loader");
+window.addEventListener("load", function() {
+setTimeout(function() {
+loader.style.display = "none";
+}, 1500);
 });

@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             alert("Login successful");
             localStorage.setItem('loggedInUser', user.username);
-            window.location.href = "homepage.html";
+            window.location.href = "Loading.html";
         }
     } else {
         alert("Invalid login details");
@@ -69,7 +69,7 @@ function validateForm() {
 
   function guestLogin() {
     localStorage.setItem('loggedInUser', 'Guest');
-    window.location.href = "homepage.html";
+    window.location.href = "Loading.html";
   }
 
   document.querySelector('#login .submit').addEventListener('click', login);
@@ -504,5 +504,8 @@ function validateForm() {
 
 // Load form data on page load
 window.addEventListener('load', loadFormData);
+
+
+
 
 
