@@ -8,6 +8,7 @@
   <script type="text/javascript" src="thread-main.js" defer></script>
   <script type="text/javascript" src="debug.js" defer></script>
   <script type="text/javascript" src="CRUD.js" defer></script>
+  <script type="text/javascript" src="comments/vigancomments.js" defer></script>
 </head>
 <body>
   <div id="pre-loader"></div>
@@ -144,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/VIGAN/viganfood.jfif" alt="about" />
         </div>
         <div class="about__content about__content-1">
-          <h3 class="section__subheader">FOOD</h3>
+          <h3 class="section__subheader">MAIN FOOD</h3>
           <h2 class="section__header">Viva Bagnet</h2>
           <p>
             A popular treat from Ilocos Sur, Philippines, Vigan bagnet is known for its mouthwateringly rich tastes and addictive crispiness. The skillful cooking of the Ilocano people is demonstrated by this delicacy of deep-fried hog belly.
@@ -163,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/VIGAN/Karbo festival.jfif" alt="about" />
         </div>
         <div class="about__content about__content-2">
-          <h3 class="section__subheader">FESTIVAL</h3>
+          <h3 class="section__subheader">MAIN FESTIVAL</h3>
           <h2 class="section__header">Karbo Festival</h2>
           <p>
             A lively and distinctive event where innovation and culture converges in Barbara, Pangasinan. The festival's focal point is the vibrant cows, which represent the town's agricultural past. Street dances and products are accompanied with the use of local materials during the festival.
@@ -180,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/VIGAN/Tourist spot.jfif" alt="about" />
         </div>
         <div class="about__content about__content-3">
-          <h3 class="section__subheader">ATTRACTION</h3>
+          <h3 class="section__subheader">MAIN ATTRACTION</h3>
           <h2 class="section__header">Bantay Watchtower</h2>
           <p>
             One of Vigan's most recognizable historical sites, also called the Bantay Bell Tower, Constructed in 1591, this building was initially used as a watchtower to protect the town and its residents from pirates and invading forces. Later on, the neighboring church now used it as a bell tower.
@@ -195,6 +196,82 @@ document.addEventListener('DOMContentLoaded', () => {
         
         
       </div>
+
+              <!-- Card Slider Section -->
+              <div class="intro2">
+                <h1 style="text-align: center; font-size: 45px;">Experiences Section</h1>
+              <div class="slider-container">
+                <button class="prev">❮</button>
+                <div class="slider">
+                  <div class="card">
+                    <div class="background-container">
+                      <img
+                        src="background1.jpg"
+                        alt="Background"
+                        class="background-img"
+                      />
+                      <!-- Background image -->
+                      <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="Avatar" class="card-img" />
+                    </div>
+                    <h2>Lotw Fox</h2>
+                    <p class="user-location">Location: Tokyo, Japan</p>
+                    <!-- User location -->
+                    <p class="comment-text">
+                      Passionate about development and design, I carry out projects at
+                      the request of users.
+                    </p>
+      
+      
+                    
+                    
+                    <!-- User comment -->
+                    <div class="action-buttons">
+                      <button class="edit-comment-btn" onclick="editComment(1)">
+                        Edit
+                      </button>
+                      <button class="delete-comment-btn" onclick="deleteComment(1)">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                  <!-- Add more cards as needed -->
+                </div>
+                <button class="next">❯</button>
+              </div>
+      
+              <h1 style="text-align: center; font-size: 30px;">Been to Vigan before? Share your experiences!</h1>
+              <div class="add-comment-container">
+                <input
+                  type="text"
+                  id="userLocationInput"
+                  placeholder="Insert title"
+                  maxlength="25"
+                />
+                <textarea
+                  id="commentInput"
+                  placeholder="Enter your comment"></textarea>
+              <div class="file-upload">
+                <input
+                  type="file"
+                  id="backgroundInput"
+                  accept="image/*"
+                  class="file-input"
+                />
+                <label for="backgroundInput" class="file-label">
+                  <img src="upload-icon.png" alt="Upload" class="upload-icon" />
+                  <!-- Custom icon for the button -->
+                  <span>Upload Background</span>
+                </label>
+              </div>
+            </div>
+            <div class="add-comment-container">
+                <button id="addCommentBtn" class="add-comment-btn" onclick="addComment()">
+                  Add Comment
+                </button>
+                <button id="saveEditCommentBtn" class="save-edit-comment-btn" onclick="saveEditComment()">
+                  Save Edit
+                </button>
+            </div>
     </section>
     
     </main>

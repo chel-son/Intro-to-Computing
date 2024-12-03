@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="thread-negros.css">
   <script type="text/javascript" src="thread-main.js" defer></script>
   <script type="text/javascript" src="debug.js" defer></script>
-  <script type="text/javascript" src="CRUD.js" defer></script>
+  <script type="text/javascript" src="CRUD.js" defer></script><script type="text/javascript" src="comments/negroscomments.js" defer></script>
 </head>
 <body>
   <div id="pre-loader"></div>
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/NEGROSOCCIDENTAL/inasal.jpg" alt="about" />
         </div>
         <div class="about__content about__content-1">
-          <h3 class="section__subheader">FOOD</h3>
+          <h3 class="section__subheader">MAIN FOOD</h3>
           <h2 class="section__header">Chicken Inasal</h2>
           <p>
             A local version of the filipino barbecue originally came from the capital city of Negros Occidental, Bacolod City. The Chicken parts are marinated in local herbs, spices, then skewered on bamboo sticks then grilled to juicy perfection.
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/NEGROSOCCIDENTAL/masskara.jpg" alt="about" />
         </div>
         <div class="about__content about__content-2">
-          <h3 class="section__subheader">FESTIVAL</h3>
+          <h3 class="section__subheader">MAIN FESTIVAL</h3>
           <h2 class="section__header">Peñafrancia Festival</h2>
           <p>
             Masskara Festival originated in the 1980s, when Bacolod City suffered a period of difficult times. The Province of Negros Occidental faced a devastating crisis when sugar, the primary source of income of the province plummeted in value due to the introduction of cheaper alternatives. The economic downturn led to one of the worst famines in the Philippines, affecting an estimated one million people. 
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/NEGROSOCCIDENTAL/TOURIST ATTRACTION.jpg" alt="about" />
         </div>
         <div class="about__content about__content-3">
-          <h3 class="section__subheader">ATTRACTION</h3>
+          <h3 class="section__subheader">MAIN ATTRACTION</h3>
           <h2 class="section__header">Sipalay</h2>
           <p>
             One of the tourist destinations known as the “Jewel of the Sugar island” is located in the southwestern part of Negros Occidental. Sipalay's name derives from the term “palay” which means there is rice. Sipalay City is known for stunning beaches, divespots, caves, and old mining.
@@ -195,6 +195,82 @@ document.addEventListener('DOMContentLoaded', () => {
         
         
       </div>
+
+              <!-- Card Slider Section -->
+              <div class="intro2">
+                <h1 style="text-align: center; font-size: 45px;">Experiences Section</h1>
+              <div class="slider-container">
+                <button class="prev">❮</button>
+                <div class="slider">
+                  <div class="card">
+                    <div class="background-container">
+                      <img
+                        src="background1.jpg"
+                        alt="Background"
+                        class="background-img"
+                      />
+                      <!-- Background image -->
+                      <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="Avatar" class="card-img" />
+                    </div>
+                    <h2>Lotw Fox</h2>
+                    <p class="user-location">Location: Tokyo, Japan</p>
+                    <!-- User location -->
+                    <p class="comment-text">
+                      Passionate about development and design, I carry out projects at
+                      the request of users.
+                    </p>
+      
+      
+                    
+                    
+                    <!-- User comment -->
+                    <div class="action-buttons">
+                      <button class="edit-comment-btn" onclick="editComment(1)">
+                        Edit
+                      </button>
+                      <button class="delete-comment-btn" onclick="deleteComment(1)">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                  <!-- Add more cards as needed -->
+                </div>
+                <button class="next">❯</button>
+              </div>
+      
+              <h1 style="text-align: center; font-size: 30px;">Been to Negros Occidental before? Share your experiences!</h1>
+              <div class="add-comment-container">
+                <input
+                  type="text"
+                  id="userLocationInput"
+                  placeholder="Insert title"
+                  maxlength="25"
+                />
+                <textarea
+                  id="commentInput"
+                  placeholder="Enter your comment"></textarea>
+              <div class="file-upload">
+                <input
+                  type="file"
+                  id="backgroundInput"
+                  accept="image/*"
+                  class="file-input"
+                />
+                <label for="backgroundInput" class="file-label">
+                  <img src="upload-icon.png" alt="Upload" class="upload-icon" />
+                  <!-- Custom icon for the button -->
+                  <span>Upload Background</span>
+                </label>
+              </div>
+            </div>
+            <div class="add-comment-container">
+                <button id="addCommentBtn" class="add-comment-btn" onclick="addComment()">
+                  Add Comment
+                </button>
+                <button id="saveEditCommentBtn" class="save-edit-comment-btn" onclick="saveEditComment()">
+                  Save Edit
+                </button>
+            </div>
     </section>
     
     </main>

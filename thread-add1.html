@@ -8,6 +8,7 @@
   <script type="text/javascript" src="thread-main.js" defer></script>
   <script type="text/javascript" src="debug.js" defer></script>
   <script type="text/javascript" src="CRUD.js" defer></script>
+  <script type="text/javascript" src="comments/comment1.js" defer></script>
 </head>
 <style>
    .header::before {
@@ -156,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="sampleimage1.jpg" alt="about" />
             </div>
             <div class="about__content about__content-1">
-                <h3 class="section__subheader">FOOD</h3>
+                <h3 class="section__subheader">MAIN FOOD</h3>
                 <h2 class="section__header">Sample Food</h2>
                 <p>Lorem ipsum <span class="read-more-text">Extra</span></p>
             </div>
@@ -165,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="sampleimage2.jpg" alt="about" />
             </div>
             <div class="about__content about__content-2">
-                <h3 class="section__subheader">FESTIVAL</h3>
+                <h3 class="section__subheader">MAIN FESTIVAL</h3>
                 <h2 class="section__header">Sample Festival</h2>
                 <p>Lorem ipsum <span class="read-more-text">Extra</span></p>
             </div>
@@ -174,11 +175,87 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="sampleimage3.jpg" alt="about" />
             </div>
             <div class="about__content about__content-3">
-                <h3 class="section__subheader">ATTRACTION</h3>
+                <h3 class="section__subheader">MAIN ATTRACTION</h3>
                 <h2 class="section__header">Sample Attraction</h2>
                 <p>Lorem ipsum <span class="read-more-text">Extra</span></p>
             </div>
         </div>
+
+                <!-- Card Slider Section -->
+                <div class="intro2">
+                  <h1 style="text-align: center; font-size: 45px;">Experiences Section</h1>
+                <div class="slider-container">
+                  <button class="prev">❮</button>
+                  <div class="slider">
+                    <div class="card">
+                      <div class="background-container">
+                        <img
+                          src="background1.jpg"
+                          alt="Background"
+                          class="background-img"
+                        />
+                        <!-- Background image -->
+                        <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="Avatar" class="card-img" />
+                      </div>
+                      <h2>Lotw Fox</h2>
+                      <p class="user-location">Location: Tokyo, Japan</p>
+                      <!-- User location -->
+                      <p class="comment-text">
+                        Passionate about development and design, I carry out projects at
+                        the request of users.
+                      </p>
+        
+        
+                      
+                      
+                      <!-- User comment -->
+                      <div class="action-buttons">
+                        <button class="edit-comment-btn" onclick="editComment(1)">
+                          Edit
+                        </button>
+                        <button class="delete-comment-btn" onclick="deleteComment(1)">
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                    <!-- Add more cards as needed -->
+                  </div>
+                  <button class="next">❯</button>
+                </div>
+        
+                <h1 id="experienceHeader" style="text-align: center; font-size: 30px;">Been to [name] before? Share your experiences!</h1>
+                <div class="add-comment-container">
+                  <input
+                    type="text"
+                    id="userLocationInput"
+                    placeholder="Insert title"
+                    maxlength="25"
+                  />
+                  <textarea
+                    id="commentInput"
+                    placeholder="Enter your comment"></textarea>
+                <div class="file-upload">
+                  <input
+                    type="file"
+                    id="backgroundInput"
+                    accept="image/*"
+                    class="file-input"
+                  />
+                  <label for="backgroundInput" class="file-label">
+                    <img src="upload-icon.png" alt="Upload" class="upload-icon" />
+                    <!-- Custom icon for the button -->
+                    <span>Upload Background</span>
+                  </label>
+                </div>
+              </div>
+              <div class="add-comment-container">
+                  <button id="addCommentBtn" class="add-comment-btn" onclick="addComment()">
+                    Add Comment
+                  </button>
+                  <button id="saveEditCommentBtn" class="save-edit-comment-btn" onclick="saveEditComment()">
+                    Save Edit
+                  </button>
+              </div>
     </section>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {

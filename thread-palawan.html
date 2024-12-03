@@ -8,6 +8,7 @@
   <script type="text/javascript" src="thread-main.js" defer></script>
   <script type="text/javascript" src="debug.js" defer></script>
   <script type="text/javascript" src="CRUD.js" defer></script>
+  <script type="text/javascript" src="comments/palawancomments.js" defer></script>
 </head>
 <body>
   <div id="pre-loader"></div>
@@ -144,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/Palawan/FOOD.jpg" alt="about" />
         </div>
         <div class="about__content about__content-1">
-          <h3 class="section__subheader">FOOD</h3>
+          <h3 class="section__subheader">MAIN FOOD</h3>
           <h2 class="section__header">Tamilok</h2>
           <p>
             One of the famous and unique foods in Palawan also known as the woodworm. Comes from the fact that tamilok literally worms their way into wood. Tamilok lives in rotting mangroves. These trees provide the animals with everything they need to survive, wood for snacks, and submergence in saltwater. 
@@ -163,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/Palawan/FESTIVAL.jpg" alt="about" />
         </div>
         <div class="about__content about__content-2">
-          <h3 class="section__subheader">FESTIVAL</h3>
+          <h3 class="section__subheader">MAIN FESTIVAL</h3>
           <h2 class="section__header">Baragatan Festival</h2>
           <p>
             The biggest convergence festival, cultural event, and founding anniversary of the province of Palawan. It is celebrated in the capital city of Palawan, Puerto Princesa. It honors the founding of the country’s first civil government after the Philippine-American War.
@@ -180,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/Palawan/destination.jpg" alt="about" />
         </div>
         <div class="about__content about__content-3">
-          <h3 class="section__subheader">ATTRACTION</h3>
+          <h3 class="section__subheader">MAIN ATTRACTION</h3>
           <h2 class="section__header">El Nido</h2>
           <p>
             The world famous tropical paradise is praised for its breathtaking limestone cliffs, pristine waters, and abundant marine life.  It is the entry point to the Bacuit Archipelago, a group of more than 45 islands and islets with coral reefs, white sand beaches, secret lagoons, and is situated in the northernmost point of Palawan. 
@@ -195,6 +196,82 @@ document.addEventListener('DOMContentLoaded', () => {
         
         
       </div>
+
+              <!-- Card Slider Section -->
+              <div class="intro2">
+                <h1 style="text-align: center; font-size: 45px;">Experiences Section</h1>
+              <div class="slider-container">
+                <button class="prev">❮</button>
+                <div class="slider">
+                  <div class="card">
+                    <div class="background-container">
+                      <img
+                        src="background1.jpg"
+                        alt="Background"
+                        class="background-img"
+                      />
+                      <!-- Background image -->
+                      <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="Avatar" class="card-img" />
+                    </div>
+                    <h2>Lotw Fox</h2>
+                    <p class="user-location">Location: Tokyo, Japan</p>
+                    <!-- User location -->
+                    <p class="comment-text">
+                      Passionate about development and design, I carry out projects at
+                      the request of users.
+                    </p>
+      
+      
+                    
+                    
+                    <!-- User comment -->
+                    <div class="action-buttons">
+                      <button class="edit-comment-btn" onclick="editComment(1)">
+                        Edit
+                      </button>
+                      <button class="delete-comment-btn" onclick="deleteComment(1)">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                  <!-- Add more cards as needed -->
+                </div>
+                <button class="next">❯</button>
+              </div>
+      
+              <h1 style="text-align: center; font-size: 30px;">Been to Palawan before? Share your experiences!</h1>
+              <div class="add-comment-container">
+                <input
+                  type="text"
+                  id="userLocationInput"
+                  placeholder="Insert title"
+                  maxlength="25"
+                />
+                <textarea
+                  id="commentInput"
+                  placeholder="Enter your comment"></textarea>
+              <div class="file-upload">
+                <input
+                  type="file"
+                  id="backgroundInput"
+                  accept="image/*"
+                  class="file-input"
+                />
+                <label for="backgroundInput" class="file-label">
+                  <img src="upload-icon.png" alt="Upload" class="upload-icon" />
+                  <!-- Custom icon for the button -->
+                  <span>Upload Background</span>
+                </label>
+              </div>
+            </div>
+            <div class="add-comment-container">
+                <button id="addCommentBtn" class="add-comment-btn" onclick="addComment()">
+                  Add Comment
+                </button>
+                <button id="saveEditCommentBtn" class="save-edit-comment-btn" onclick="saveEditComment()">
+                  Save Edit
+                </button>
+            </div>
     </section>
     
     </main>

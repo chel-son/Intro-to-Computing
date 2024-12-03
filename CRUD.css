@@ -141,12 +141,14 @@ nav svg {
   font-weight: 500;
   color:#11121a;
 }
-.user-info img{
+.user-info img {
   width: 60px;
+  height: 60px; /* Ensure height and width are equal */
   border-radius: 50%;
   margin-right: 15px;
-
+  object-fit: cover; /* Ensures the image is cropped to fit the container */
 }
+
 .sub-menu hr{
   border: 0;
   height: 1px;
@@ -283,6 +285,8 @@ nav svg {
   cursor: pointer;
   opacity: 0;
   animation: animate 1s ease-in-out 0.6s 1 forwards;
+  background-color: #3685fb;
+  color: white;
 }
 
 .content{

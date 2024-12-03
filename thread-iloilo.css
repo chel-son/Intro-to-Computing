@@ -433,7 +433,7 @@ main p {
   --text-light: #cbd5e1;
   --white: #ffffff;
   --max-width: 1200px;
-  --header-font: "Playfair Display", serif;
+  --header-font: "Poppins", serif;
 }
 
 .section{
@@ -686,3 +686,335 @@ body {
     position: fixed;
     z-index: 100;
   }
+
+  
+/* Card Slider Styles */
+
+.intro2 {
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.slider-container {
+  position: relative;
+  width: 80%;
+  max-width: 1200px;
+  overflow: hidden;
+  margin: 1rem auto;
+  padding: 1rem 0;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+.card {
+  flex: 1 0 calc(33.333% - 20px);
+  box-sizing: border-box;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  background-color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 450px; /* Increased height for background image */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Center align content */
+  position: relative; /* Relative positioning for background overlay */
+  overflow: hidden; /* Clip overflowing content */
+}
+
+.background-container {
+  position: relative;
+  width: 100%;
+  height: 50%; /* Set height for background container */
+}
+
+.background-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px 15px 0 0; /* Rounded corners at the top */
+}
+
+.card-img {
+  position: absolute;
+  bottom: -40px; /* Adjust position of avatar */
+  left: 14%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 6px solid #ffffff; /* White border around avatar */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.card h2 {
+  margin: 10px 0 10px 60px; /* Adjust margin to accommodate avatar */
+  font-size: 1.6em; /* Larger font size */
+  color: #333; /* Darker text */
+  font-weight: 800;
+  align-self: right;
+}
+
+.card .user-location {
+  font-size: 1.3rem;
+  color: #222533; /* Lighter text for location */
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.card .comment-text {
+  font-size: 1em;
+  color: #777; /* Slightly lighter text */
+  white-space: normal; /* Ensure full comment is shown */
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.comment-text {
+  max-height: 100px; /* Adjust height as needed */
+  overflow-y: auto; /* Add vertical scroll bar */
+}
+
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card .action-buttons {
+  display: flex;
+  justify-content: center;
+  width: 80%; /* Adjust width as needed */
+  margin-top: auto; /* Push buttons to the bottom */
+}
+
+.card .action-buttons button {
+  background-color: #007bff; /* Blue button */
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 25px; /* Rounded button */
+  font-size: 0.9em;
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 5px; /* Spacing between buttons */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to button */
+}
+
+.card .action-buttons button:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+}
+
+.card .delete-comment-btn {
+  background-color: #dc3545; /* Red delete button */
+}
+
+.card .delete-comment-btn:hover {
+  background-color: #c82333;
+}
+
+/* Previous Button */
+.prev {
+  position: absolute;
+  top: 50%;
+  left: -1px; /* Position outside to the left of the container */
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 10;
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px; /* Ensure button is wide enough for icon */
+  height: 50px; /* Ensure button is tall enough for icon */
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to button */
+}
+
+.prev:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+}
+
+/* Next Button */
+.next {
+  position: absolute;
+  top: 50%;
+  right: -1px; /* Position outside to the right of the container */
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 10;
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px; /* Ensure button is wide enough for icon */
+  height: 50px; /* Ensure button is tall enough for icon */
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to button */
+}
+
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+}
+
+/* Add Comment Container */
+.add-comment-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* File Upload Styles */
+.file-upload {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  margin-right: 15px; /* Adjust spacing */
+}
+
+.file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 25px; /* Rounded button */
+  padding: 8px 16px; /* Smaller button size */
+  font-size: 0.9em; /* Smaller font size */
+  font-weight: bold;
+  cursor: pointer;
+  height: 50px;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to button */
+}
+
+.file-label:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+}
+
+.upload-icon {
+  width: 20px; /* Smaller icon size */
+  height: 20px; /* Smaller icon size */
+  margin-right: 8px; /* Adjust spacing */
+}
+
+#userLocationInput, #commentInput {
+  font-family: Poppins;
+  padding: 8px; /* Smaller padding */
+  font-size: 1.2em; /* Smaller font size */
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 25px; /* Rounded input */
+  margin-right: 15px;
+  width: 400px; /* Adjusted width */
+  max-width: 80%;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow to input */
+  resize: none;
+  height: 50px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+
+#userLocationInput:focus, #commentInput:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Larger shadow on focus */
+}
+
+.add-comment-container button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 8px 16px; /* Smaller padding */
+  cursor: pointer;
+  border-radius: 25px; /* Rounded button */
+  font-size: 0.9em; /* Smaller font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to button */
+}
+
+.add-comment-container button:hover {
+  background-color: #218838;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+}
+
+.save-edit-comment-btn {
+  margin-left: 20px; /* Add space between buttons */
+  background-color: #ffc107; /* Yellow save edit button */
+}
+
+.save-edit-comment-btn:hover {
+  background-color: #e0a800;
+}
+
+@media (max-width: 768px) {
+  .slider-container {
+      width: 100%;
+      padding: 15px;
+  }
+
+  .card {
+      flex: 0 0 45%; /* Adjusted width for smaller screens */
+      margin: 10px;
+      height: 350px; /* Adjusted height for smaller screens */
+  }
+
+  #userLocationInput, #commentInput {
+      width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+      flex: 0 0 100%; /* Full width on mobile */
+      margin: 10px 0;
+      height: 300px; /* Adjusted height for smaller screens */
+  }
+
+  #userLocationInput, #commentInput {
+      width: 120px;
+  }
+}

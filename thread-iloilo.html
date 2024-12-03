@@ -8,6 +8,7 @@
   <script type="text/javascript" src="thread-main.js" defer></script>
   <script type="text/javascript" src="debug.js" defer></script>
   <script type="text/javascript" src="CRUD.js" defer></script>
+  <script type="text/javascript" src="comments/iloilocomments.js" defer></script>
 </head>
 <body>
   <div id="pre-loader"></div>
@@ -145,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/ILOILO/FOOD.jpg" alt="about" />
         </div>
         <div class="about__content about__content-1">
-          <h3 class="section__subheader">FOOD</h3>
+          <h3 class="section__subheader">MAIN FOOD</h3>
           <h2 class="section__header">La Paz Batchoy</h2>
           <p>
             La Paz Batchoy, commonly known as batchoy or batsoy, is a well-known noodle soup from La Paz, Iloilo City. It is made with fresh egg noodles, meat stock, crushed chicharon, and pork offal. 
@@ -164,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/ILOILO/Iloilo_Dinagyang_Festival.jpg" alt="about" />
         </div>
         <div class="about__content about__content-2">
-          <h3 class="section__subheader">FESTIVAL</h3>
+          <h3 class="section__subheader">MAIN FESTIVAL</h3>
           <h2 class="section__header">Dinagyang Festival</h2>
           <p>
             Dinagyang Festival is an exhilarating and world-renowned celebration that takes place in Iloilo City, Iloilo, Philippines. The Ilonggo people's rich cultural legacy and strong spirit are on display during this festival. A replica of the Santo Niño from Cebu was transported to Iloilo in the 1960s, which is when the event first began. The Dinagyang Festival was created to celebrate the Santo Niño and promote Iloilo's cultural identity, and it was inspired by the Sinulog Festival in Cebu.
@@ -181,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/ILOILO/TOURIST DESTINATION.jpg" alt="about" />
         </div>
         <div class="about__content about__content-3">
-          <h3 class="section__subheader">ATTRACTION</h3>
+          <h3 class="section__subheader">MAIN ATTRACTION</h3>
           <h2 class="section__header">Islas de Gigantes</h2>
           <p>
             The beautiful Islas de Gigantes collection of islands near Carles, Iloilo, is well-known for its white sand beaches, varied marine life, and distinctive rock formations. The local legend that enormous human bones were discovered in one of the caverns here gave rise to the name of this well-known tourist destination. Gigantes Sur, Gigantes Norte, and a number of smaller islets make up the island chain.
@@ -196,6 +197,82 @@ document.addEventListener('DOMContentLoaded', () => {
         
         
       </div>
+
+              <!-- Card Slider Section -->
+              <div class="intro2">
+                <h1 style="text-align: center; font-size: 45px;">Experiences Section</h1>
+              <div class="slider-container">
+                <button class="prev">❮</button>
+                <div class="slider">
+                  <div class="card">
+                    <div class="background-container">
+                      <img
+                        src="background1.jpg"
+                        alt="Background"
+                        class="background-img"
+                      />
+                      <!-- Background image -->
+                      <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="Avatar" class="card-img" />
+                    </div>
+                    <h2>Lotw Fox</h2>
+                    <p class="user-location">Location: Tokyo, Japan</p>
+                    <!-- User location -->
+                    <p class="comment-text">
+                      Passionate about development and design, I carry out projects at
+                      the request of users.
+                    </p>
+      
+      
+                    
+                    
+                    <!-- User comment -->
+                    <div class="action-buttons">
+                      <button class="edit-comment-btn" onclick="editComment(1)">
+                        Edit
+                      </button>
+                      <button class="delete-comment-btn" onclick="deleteComment(1)">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                  <!-- Add more cards as needed -->
+                </div>
+                <button class="next">❯</button>
+              </div>
+      
+              <h1 style="text-align: center; font-size: 30px;">Been to Iloilo before? Share your experiences!</h1>
+              <div class="add-comment-container">
+                <input
+                  type="text"
+                  id="userLocationInput"
+                  placeholder="Insert title"
+                  maxlength="25"
+                />
+                <textarea
+                  id="commentInput"
+                  placeholder="Enter your comment"></textarea>
+              <div class="file-upload">
+                <input
+                  type="file"
+                  id="backgroundInput"
+                  accept="image/*"
+                  class="file-input"
+                />
+                <label for="backgroundInput" class="file-label">
+                  <img src="upload-icon.png" alt="Upload" class="upload-icon" />
+                  <!-- Custom icon for the button -->
+                  <span>Upload Background</span>
+                </label>
+              </div>
+            </div>
+            <div class="add-comment-container">
+                <button id="addCommentBtn" class="add-comment-btn" onclick="addComment()">
+                  Add Comment
+                </button>
+                <button id="saveEditCommentBtn" class="save-edit-comment-btn" onclick="saveEditComment()">
+                  Save Edit
+                </button>
+            </div>
     </section>
     
     </main>

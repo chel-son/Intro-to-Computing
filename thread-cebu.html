@@ -8,6 +8,7 @@
   <script type="text/javascript" src="thread-main.js" defer></script>
   <script type="text/javascript" src="debug.js" defer></script>
   <script type="text/javascript" src="CRUD.js" defer></script>
+  <script type="text/javascript" src="comments/cebucomments.js" defer></script>
 </head>
 <body>
   <div id="pre-loader"></div>
@@ -145,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/CEBU/lechon.jpg" alt="about" />
         </div>
         <div class="about__content about__content-1">
-          <h3 class="section__subheader">FOOD</h3>
+          <h3 class="section__subheader">MAIN FOOD</h3>
           <h2 class="section__header">Lechon Baboy</h2>
           <p>
             Cebu's version of lechon is known for its perfect blend of crispy skin and delicate, savory meat. Unlike other regional varieties, Cebu lechon is marinated with a unique blend of spices, including lemongrass, garlic, and ginger, which give the pig a delightful scent. The lechon is roasted over an open flame, turning the skin golden and crispy while keeping the meat juicy inside.
@@ -164,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/CEBU/Culture.jfif" alt="about" />
         </div>
         <div class="about__content about__content-2">
-          <h3 class="section__subheader">FESTIVAL</h3>
+          <h3 class="section__subheader">MAIN FESTIVAL</h3>
           <h2 class="section__header">Sinulog Festival</h2>
           <p>
             The Sinulog Festival, celebrated on the third Sunday of January in Cebu City, honors the Santo Niño (the Child Jesus). The streets come alive with a beautiful parade of dancers dressed in colorful costumes, marching to the rhythmic beat of drums as they perform the classic Sinulog dance, which depicts the flow of water. 
@@ -181,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/CEBU/The Little Kyoto.jpg" alt="about" />
         </div>
         <div class="about__content about__content-3">
-          <h3 class="section__subheader">ATTRACTION</h3>
+          <h3 class="section__subheader">MAIN ATTRACTION</h3>
           <h2 class="section__header">Little Kyoto</h2>
           <p>
             Also known as the "Japanese Garden," offers a peaceful retreat that transports visitors to a serene, Japanese-inspired atmosphere. Located in the town of Carmen, this unique destination features beautiful gardens, traditional Japanese architecture, and picturesque koi ponds, all set against the backdrop of lush greenery. The area’s design reflects the tranquil beauty of Japan, making it an ideal spot for relaxation, photography, and a taste of Japanese culture.
@@ -196,6 +197,82 @@ document.addEventListener('DOMContentLoaded', () => {
         
         
       </div>
+
+              <!-- Card Slider Section -->
+              <div class="intro2">
+                <h1 style="text-align: center; font-size: 45px;">Experiences Section</h1>
+              <div class="slider-container">
+                <button class="prev">❮</button>
+                <div class="slider">
+                  <div class="card">
+                    <div class="background-container">
+                      <img
+                        src="background1.jpg"
+                        alt="Background"
+                        class="background-img"
+                      />
+                      <!-- Background image -->
+                      <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="Avatar" class="card-img" />
+                    </div>
+                    <h2>Lotw Fox</h2>
+                    <p class="user-location">Location: Tokyo, Japan</p>
+                    <!-- User location -->
+                    <p class="comment-text">
+                      Passionate about development and design, I carry out projects at
+                      the request of users.
+                    </p>
+      
+      
+                    
+                    
+                    <!-- User comment -->
+                    <div class="action-buttons">
+                      <button class="edit-comment-btn" onclick="editComment(1)">
+                        Edit
+                      </button>
+                      <button class="delete-comment-btn" onclick="deleteComment(1)">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                  <!-- Add more cards as needed -->
+                </div>
+                <button class="next">❯</button>
+              </div>
+      
+              <h1 style="text-align: center; font-size: 30px;">Been to Cebu before? Share your experiences!</h1>
+              <div class="add-comment-container">
+                <input
+                  type="text"
+                  id="userLocationInput"
+                  placeholder="Insert title"
+                  maxlength="25"
+                />
+                <textarea
+                  id="commentInput"
+                  placeholder="Enter your comment"></textarea>
+              <div class="file-upload">
+                <input
+                  type="file"
+                  id="backgroundInput"
+                  accept="image/*"
+                  class="file-input"
+                />
+                <label for="backgroundInput" class="file-label">
+                  <img src="upload-icon.png" alt="Upload" class="upload-icon" />
+                  <!-- Custom icon for the button -->
+                  <span>Upload Background</span>
+                </label>
+              </div>
+            </div>
+            <div class="add-comment-container">
+                <button id="addCommentBtn" class="add-comment-btn" onclick="addComment()">
+                  Add Comment
+                </button>
+                <button id="saveEditCommentBtn" class="save-edit-comment-btn" onclick="saveEditComment()">
+                  Save Edit
+                </button>
+            </div>
     </section>
     
     </main>

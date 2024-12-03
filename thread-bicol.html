@@ -8,6 +8,7 @@
   <script type="text/javascript" src="thread-main.js" defer></script>
   <script type="text/javascript" src="debug.js" defer></script>
   <script type="text/javascript" src="CRUD.js" defer></script>
+  <script type="text/javascript" src="comments/bicolcomments.js" defer></script>
 </head>
 <body>
   <div id="pre-loader"></div>
@@ -145,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/BICOL/bicolexpress.jpg" alt="about" />
         </div>
         <div class="about__content about__content-1">
-          <h3 class="section__subheader">FOOD</h3>
+          <h3 class="section__subheader">MAIN FOOD</h3>
           <h2 class="section__header">Bicol Express</h2>
           <p>
             Bicol Express is a popular Filipino dish from the Bicol region, recognized for its robust and spicy flavors. This substantial stew is made with pork, shrimp, or fish cooked in coconut milk and is generally flavored with long green chilies called "siling haba," as well as chili flakes for an added kick. The thick, creamy coconut milk tempers the heat of the chilies, resulting in a tasty and soothing dish that has become a favorite throughout the Philippines.
@@ -164,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/BICOL/magayon-festival-logo.jpg" alt="about" />
         </div>
         <div class="about__content about__content-2">
-          <h3 class="section__subheader">FESTIVAL</h3>
+          <h3 class="section__subheader">MAIN FESTIVAL</h3>
           <h2 class="section__header">Peñafrancia Festival</h2>
           <p>
             Held every September in Naga City, Bicol, is one of the most significant religious events in the Philippines. It honors the Nuestra Señora de Peñafrancia, the patroness of Bicol, with a grand procession and various cultural activities that draw millions of devotees and tourists.
@@ -181,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="images/BICOL/mayon.jpg" alt="about" />
         </div>
         <div class="about__content about__content-3">
-          <h3 class="section__subheader">ATTRACTION</h3>
+          <h3 class="section__subheader">MAIN ATTRACTION</h3>
           <h2 class="section__header">Mt. Mayon</h2>
           <p>
             Mayon Volcano, located in the Philippines' Bicol area, is known for its nearly perfect, symmetrical cone shape, making it one of the world's most famous and active volcanoes. The volcano is a major tourist destination, attracting visitors from all over the world who come to observe its spectacular look and participate in activities such as trekking, sightseeing, and photography, particularly while it is not erupting.
@@ -196,6 +197,82 @@ document.addEventListener('DOMContentLoaded', () => {
         
         
       </div>
+
+              <!-- Card Slider Section -->
+              <div class="intro2">
+                <h1 style="text-align: center; font-size: 45px;">Experiences Section</h1>
+              <div class="slider-container">
+                <button class="prev">❮</button>
+                <div class="slider">
+                  <div class="card">
+                    <div class="background-container">
+                      <img
+                        src="background1.jpg"
+                        alt="Background"
+                        class="background-img"
+                      />
+                      <!-- Background image -->
+                      <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="Avatar" class="card-img" />
+                    </div>
+                    <h2>Lotw Fox</h2>
+                    <p class="user-location">Location: Tokyo, Japan</p>
+                    <!-- User location -->
+                    <p class="comment-text">
+                      Passionate about development and design, I carry out projects at
+                      the request of users.
+                    </p>
+      
+      
+                    
+                    
+                    <!-- User comment -->
+                    <div class="action-buttons">
+                      <button class="edit-comment-btn" onclick="editComment(1)">
+                        Edit
+                      </button>
+                      <button class="delete-comment-btn" onclick="deleteComment(1)">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                  <!-- Add more cards as needed -->
+                </div>
+                <button class="next">❯</button>
+              </div>
+      
+              <h1 style="text-align: center; font-size: 30px;">Been to Bicol before? Share your experiences!</h1>
+              <div class="add-comment-container">
+                <input
+                  type="text"
+                  id="userLocationInput"
+                  placeholder="Insert title"
+                  maxlength="25"
+                />
+                <textarea
+                  id="commentInput"
+                  placeholder="Enter your comment"></textarea>
+              <div class="file-upload">
+                <input
+                  type="file"
+                  id="backgroundInput"
+                  accept="image/*"
+                  class="file-input"
+                />
+                <label for="backgroundInput" class="file-label">
+                  <img src="upload-icon.png" alt="Upload" class="upload-icon" />
+                  <!-- Custom icon for the button -->
+                  <span>Upload Background</span>
+                </label>
+              </div>
+            </div>
+            <div class="add-comment-container">
+                <button id="addCommentBtn" class="add-comment-btn" onclick="addComment()">
+                  Add Comment
+                </button>
+                <button id="saveEditCommentBtn" class="save-edit-comment-btn" onclick="saveEditComment()">
+                  Save Edit
+                </button>
+            </div>
     </section>
     
     </main>
