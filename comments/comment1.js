@@ -31,6 +31,19 @@ function getUserProfileImage(username) {
     return user ? user.profileImage : 'https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png';
 }
 
+function updateCommentCount() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const userIndex = users.findIndex(user => user.username === loggedInUser);
+    const comments = JSON.parse(localStorage.getItem('comment1')) || [];
+    const userComments = comments.filter(comment => comment.header === loggedInUser).length;
+
+    if (userIndex !== -1) {
+        users[userIndex].commentCount = userComments;
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+}
+
 function addComment() {
     const backgroundInput = document.getElementById('backgroundInput');
     const userLocationInput = document.getElementById('userLocationInput');
@@ -65,6 +78,7 @@ function addComment() {
             showSlide(currentIndex);
 
             showNotification("You added a comment.", 'blue'); // Added notification
+            updateCommentCount();
         };
         reader.readAsDataURL(backgroundInput.files[0]);
     }
@@ -181,6 +195,7 @@ function deleteComment(timestamp) {
     localStorage.setItem('comment1', JSON.stringify(comments));
     loadComments();
     showNotification("You deleted a comment.", 'red'); // Added notification
+    updateCommentCount();
 }
 
 function loadComments() {
@@ -206,17 +221,17 @@ function checkGuestUser() {
         addCommentBtn.style.opacity = '0.5';
         saveEditCommentBtn.style.opacity = '0.5';
         addCommentBtn.onclick = function() {
-            alert('You must sign in first to share experiences');
+            showNotification('You must sign in first to share experiences', 'red');
         };
         saveEditCommentBtn.onclick = function() {
-            alert('You must sign in first to share experiences');
+            showNotification('You must sign in first to share experiences', 'red');
         };
     } else {
         addCommentBtn.style.opacity = '1';
         saveEditCommentBtn.style.opacity = '1';
         addCommentBtn.onclick = addComment;
         saveEditCommentBtn.onclick = saveEditComment;
-    }
+    }    
 }
 
 // Update the load event to include the guest check
@@ -239,6 +254,22 @@ function handleCommentInput() {
     });
 }
 
+function checkCommentCount() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(user => user.username === loggedInUser);
+    const comments = JSON.parse(localStorage.getItem('comment1')) || [];
+    const currentCommentCount = comments.filter(comment => comment.header === loggedInUser).length;
+  
+    if (user && user.commentCount !== undefined) {
+      if (currentCommentCount < user.commentCount) {
+        showNotification('Your comment(s) has been deleted by an Admin', 'red'); // Added notification
+      }
+      user.commentCount = currentCommentCount; // Update the stored count
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+  }
+  
 window.addEventListener('load', function() {
     const threadAdd = JSON.parse(localStorage.getItem('threadAdd1')) || [];
     const name = threadAdd.name || 'your destination'; // Default to 'your destination' if name is not found
@@ -248,6 +279,7 @@ window.addEventListener('load', function() {
         header.innerHTML = `Been to ${name} before? Share your experiences!`;
     }
 
+    checkCommentCount();
     loadComments();
     checkGuestUser();
     handleCommentInput();
