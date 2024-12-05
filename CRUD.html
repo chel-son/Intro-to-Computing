@@ -26,7 +26,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
         </label>
         <a class="home-link" id="profile-link">User Profile</a>
-        <a href="AboutUS.html">About Us</a> 
+        <a href="about.html">About Us</a> 
         <a onclick="toggleMenu()">Account</a>
         <div class="sub-menu-wrap" id="dropMenu">
           <div class="dropdown-menu">
@@ -156,42 +156,42 @@ document.getElementById('dropdown-username').textContent = user.username;
   </nav>
   <main class="container">
   <div class="slide">
-    <div class="item" style="background-image: url(images/CEBU/main.jpeg);">
+    <div class="item" data-predefined="true" style="background-image: url(images/CEBU/main.jpeg);">
       <div class="content">
         <div class="name">Cebu</div>
         <div class="des">Where the Heart Sings and Adventure Springs!</div>
         <button onclick="window.location.href='thread-cebu.html';">Explore</button>
       </div>
     </div>
-    <div class="item" style="background-image: url(images/BICOL/main.jpg);">
+    <div class="item" data-predefined="true" style="background-image: url(images/BICOL/main.jpg);">
       <div class="content">
         <div class="name">Bicol</div>
         <div class="des">In Bicol City, Spicy Delights, Bicol Express Ignites!</div>
         <button onclick="window.location.href='thread-bicol.html';">Explore</button>
       </div>
     </div>
-    <div class="item" style="background-image: url(images/ILOILO/mainpic.jpg);">
+    <div class="item" data-predefined="true" style="background-image: url(images/ILOILO/mainpic.jpg);">
       <div class="content">
         <div class="name">Iloilo</div>
         <div class="des">Fun, Foodie, Friendly! The City Of Gastronomy!</div>
         <button onclick="window.location.href='thread-iloilo.html';">Explore</button>
       </div>
     </div>
-    <div class="item" style="background-image: url(images/NEGROSOCCIDENTAL/main.jpg)">
+    <div class="item" data-predefined="true" style="background-image: url(images/NEGROSOCCIDENTAL/main.jpg)">
       <div class="content">
         <div class="name">Negros Occidental</div>
         <div class="des">The Land of Sweet Surprises and Endless Smiles!</div>
         <button onclick="window.location.href='thread-negros.html';">Explore</button>
       </div>
     </div>
-    <div class="item" style="background-image: url(images/Palawan/MAIN.webp)">
+    <div class="item" data-predefined="true" style="background-image: url(images/Palawan/MAIN.webp)">
       <div class="content">
         <div class="name">Palawan</div>
         <div class="des">Every Island, An Adventure with Lots to Explore!</div>
         <button onclick="window.location.href='thread-palawan.html';">Explore</button>
       </div>
     </div>
-    <div class="item" style="background-image: url(images/VIGAN/Main_.jfif)">
+    <div class="item" data-predefined="true" style="background-image: url(images/VIGAN/Main_.jfif)">
       <div class="content">
         <div class="name">Vigan</div>
         <div class="des">History Lives and Culture Thrives! La Viva Vigan!</div>
@@ -209,7 +209,6 @@ document.getElementById('dropdown-username').textContent = user.username;
     <button class="icon-button delete" id="delete-button"></button>
   </div>
 </main>
-
 
 
 

@@ -6,9 +6,11 @@
     <title>Create or Edit Your Experience</title>
     <link rel="stylesheet" href="FORM.css">
 
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <link rel="stylesheet" href="Notification.css"/>
     <link rel="stylesheet" href="Antinotification.css"/>
+
 </head>
 <style>
     .header::before {
@@ -611,7 +613,11 @@ window.addEventListener("load", function() {
         // Update the corresponding thread
         localStorage.setItem(`threadAdd${slideData.index + 1}`, JSON.stringify(slideData));
 
-        showNotification('Slide updated successfully.', 'green');
+        // Set a flag indicating that a thread has been edited
+        localStorage.setItem("showThreadEditedNotification", "true");
+
+        // Redirect to CRUD.html
+        window.location.href = "CRUD.html";
     } else {
         console.error('No slide data found for saving.');
     }
@@ -659,7 +665,40 @@ function validateForm() {
   }
   return true;
 }
+
+function showNotification(message, type) {
+  const notification = type === 'blue' ? document.querySelector('.toast') : document.querySelector('.toasty');
+  const progress = notification.querySelector('.progress');
+  const messageText = notification.querySelector('.text-2');
+  const closeIcon = notification.querySelector('.close');
+
+  return new Promise((resolve) => {
+    messageText.textContent = message;
+
+    notification.classList.add('active');
+    progress.classList.add('active');
+
+    progress.addEventListener('animationend', () => {
+      notification.classList.add('hide');
+      setTimeout(() => {
+        notification.classList.remove('active', 'hide');
+        progress.classList.remove('active');
+        resolve();
+      }, 500);
+    }, { once: true });
+
+    closeIcon.addEventListener('click', () => {
+      notification.classList.add('hide');
+      setTimeout(() => {
+        notification.classList.remove('active', 'hide');
+        progress.classList.remove('active');
+        resolve();
+      }, 500);
+    });
+  });
+}
   </script>
+
 
 </body>
 </html>

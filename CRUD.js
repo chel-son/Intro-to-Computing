@@ -20,67 +20,90 @@ document.addEventListener('DOMContentLoaded', async function() {
       showHiddenSlides(); // Show the hidden slides when navigation occurs
   });
 
-  deleteButton.addEventListener('click', function() {
-      let selectedSlide = document.querySelector('.slide .item.active');
-      if (selectedSlide) {
-          let slideName = selectedSlide.querySelector('.name').textContent;
-          let slideDescription = selectedSlide.querySelector('.des').textContent;
-
-          // Remove slide from DOM
-          selectedSlide.remove();
-
-          // Remove slide from localStorage
-          let storedSlides = JSON.parse(localStorage.getItem("slides")) || [];
-          let slideIndex;
-          storedSlides = storedSlides.filter((slide, index) => {
-              if (slide.name === slideName && slide.description === slideDescription) {
-                  slideIndex = slide.index;
-                  return false;
-              }
-              return true;
-          });
-          localStorage.setItem("slides", JSON.stringify(storedSlides)); // Update localStorage
-
-          // Reset the corresponding thread page
-          if (slideIndex) {
-              localStorage.removeItem(`threadAdd${slideIndex}`);
-          }
-
-          // Log current localStorage state
-          logLocalStorage();
-          showHiddenSlides(); // Ensure visibility is updated
-
-          // Show notification for successful deletion
-          showNotification('You deleted a thread.', 'red');
-      } else {
-          // Show notification for no slide selected
-          showNotification('No slide selected to delete.', 'red');
-      }
-  });
-
-  // Edit button functionality
-  console.log('Edit button:', editButton); // Log to check if the button is found
-
-  // Initially disable the edit button
-  editButton.disabled = true;
-
-// Event listener for slide selection for existing slides
-document.querySelectorAll('.slide .item').forEach(slide => {
-    slide.addEventListener('click', function() {
-        console.log('Slide clicked:', this); // Log to check slide selection
-
-        // Make this slide active and others inactive
-        document.querySelectorAll('.slide .item').forEach(s => s.classList.remove('active'));
-        this.classList.add('active');
-
-        // Enable edit button only if the slide is dynamically added
-        if (this.classList.contains('dynamic-slide')) {
-            editButton.disabled = false;
-            console.log('Edit button enabled'); // Log to check if edit button is enabled
-        } else {
-            editButton.disabled = true;
-            console.log('Edit button disabled'); // Log to check if edit button is disabled
+  document.getElementById('delete-button').addEventListener('click', function() {
+    let selectedSlide = document.querySelector('.slide .item.active');
+    if (selectedSlide) {
+        if (selectedSlide.getAttribute('data-predefined') === 'true') {
+            showNotification('Cannot delete predefined slides.', 'red');
+            return;
         }
+
+        let slideName = selectedSlide.querySelector('.name').textContent;
+        let slideDescription = selectedSlide.querySelector('.des').textContent;
+
+        // Remove slide from DOM
+        selectedSlide.remove();
+
+        // Remove slide from localStorage
+        let storedSlides = JSON.parse(localStorage.getItem("slides")) || [];
+        const slideIndex = storedSlides.findIndex(slide => slide.name === slideName && slide.description === slideDescription);
+
+        if (slideIndex !== -1) {
+            storedSlides.splice(slideIndex, 1); // Remove the slide from the array
+            localStorage.setItem("slides", JSON.stringify(storedSlides)); // Update localStorage
+
+            // Remove corresponding thread page data
+            localStorage.removeItem(`threadAdd${slideIndex + 1}`);
+        }
+
+        // Log current localStorage state
+        logLocalStorage();
+        showHiddenSlides(); // Ensure visibility is updated
+
+        // Show notification for successful deletion
+        showNotification('You deleted a thread.', 'red');
+    } else {
+        // Show notification for no slide selected
+        showNotification('No slide selected to delete.', 'red');
+    }
+});
+
+
+function logLocalStorage() {
+    console.log("Current localStorage state:", localStorage);
+}
+
+function showHiddenSlides() {
+    const slides = document.querySelectorAll('.slide .item');
+    slides.forEach(slide => {
+        slide.style.display = 'block';
+    });
+}
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const editButton = document.querySelector('.icon-button.edit');
+    
+    // Initially disable the edit button
+    editButton.disabled = true;
+
+    // Add an event listener for the disabled state
+    editButton.addEventListener('click', function(event) {
+        if (editButton.disabled) {
+            event.preventDefault(); // Prevent the default action if button is disabled
+            showNotification('No slide selected to edit.', 'red');
+        }
+    });
+
+    // Event listener for slide selection for existing slides
+    document.querySelectorAll('.slide .item').forEach(slide => {
+        slide.addEventListener('click', function() {
+            console.log('Slide clicked:', this); // Log to check slide selection
+
+            // Make this slide active and others inactive
+            document.querySelectorAll('.slide .item').forEach(s => s.classList.remove('active'));
+            this.classList.add('active');
+
+            // Enable edit button only if the slide is dynamically added
+            if (this.classList.contains('dynamic-slide')) {
+                editButton.disabled = false;
+                console.log('Edit button enabled'); // Log to check if edit button is enabled
+            } else {
+                editButton.disabled = true;
+                console.log('Edit button disabled'); // Log to check if edit button is disabled
+            }
+        });
     });
 });
 

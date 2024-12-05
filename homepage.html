@@ -261,13 +261,6 @@ function showWelcomeNotification() {
         localStorage.removeItem('showProfileUpdateNotification');
       });
     }
-
-    if (localStorage.getItem('showThreadAddedNotification') === 'true') {
-      showNotification('You added a thread', 'blue').then(() => {
-        // Clear the flag from localStorage
-        localStorage.removeItem('showThreadAddedNotification');
-      });
-    }
   });
 </script>
 
