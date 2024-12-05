@@ -27,7 +27,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
               </label>
               <a class="home-link" id="profile-link">User Profile</a>
-              <a href="about.html">About Us</a> 
+              <a href="AboutUS.html">About Us</a> 
               <a onclick="toggleMenu()">Account</a>
               <div class="sub-menu-wrap" id="dropMenu">
                 <div class="dropdown-menu">
@@ -41,43 +41,116 @@
                         <p>Edit Profile</p>
                         <span>></span>
                     </a>
-                    <a href="LoginPage.html" class="sub-menu-link">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3596/3596149.png">
-                        <p>Logout</p>
-                        <span>></span>
-                    </a>
+                    <a href="javascript:void(0);" onclick="logout()" class="sub-menu-link">
+                      <img src="https://cdn-icons-png.flaticon.com/512/3596/3596149.png">
+                      <p>Logout</p>
+                      <span>></span>
+                  </a>                  
                 </div>
             </div>            
           </div>
       </nav>
       <script> 
-          let dropMenu = document.getElementById("dropMenu");
-          function toggleMenu(){
-              dropMenu.classList.toggle("open-menu");
-          }
-  
-          function updateNavbar() {
-              const username = localStorage.getItem('loggedInUser');
-              if (username) {
-                  document.getElementById('profile-link').textContent = username;
-                  document.getElementById('dropdown-username').textContent = username;
-              }
-          }
-          updateNavbar();
+      function logout() {
+  const messages = [
+    'Looking forward to your next visit!',
+    'Logging out. Redirecting you back to Login.',
+    'Goodbye, until next time!'
+  ];
+  const randomMessage = messages[Math.floor(Math.random() * messages.length)];
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const loggedInUser = localStorage.getItem('loggedInUser');
-        const user = users.find(u => u.username === loggedInUser);
-        
-        if (user) {
-            const dropdownProfileImage = document.getElementById('dropdownProfileImage');
-            const profileImage = user.profileImage || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png";
-            dropdownProfileImage.src = profileImage;
+  // Close the dropdown menu
+  const dropMenu = document.getElementById("dropMenu");
+  if (dropMenu && dropMenu.classList.contains("open-menu")) {
+    dropMenu.classList.remove("open-menu");
+  }
 
-            document.getElementById('dropdown-username').textContent = user.username;
-        }
+  showNotification(randomMessage, 'red').then(() => {
+    // Wait for the notification to disappear or be closed, then redirect
+    window.location.href = 'LoginPage.html';
+  });
+
+  // Also handle the case where the user clicks the close button
+  const closeIcon = document.querySelector('.toasty .close'); // Assuming .toasty is for red notifications
+  if (closeIcon) {
+    closeIcon.addEventListener('click', () => {
+      window.location.href = 'LoginPage.html';
     });
+  }
+}
+
+// Existing functions for menu toggle and navbar update
+let dropMenu = document.getElementById("dropMenu");
+function toggleMenu() {
+  dropMenu.classList.toggle("open-menu");
+}
+
+function updateNavbar() {
+  const username = localStorage.getItem('loggedInUser');
+  if (username) {
+    document.getElementById('profile-link').textContent = username;
+    document.getElementById('dropdown-username').textContent = username;
+  }
+}
+updateNavbar();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const users = JSON.parse(localStorage.getItem('users')) || [];
+  const loggedInUser = localStorage.getItem('loggedInUser');
+  const user = users.find(u => u.username === loggedInUser);
+
+  if (user) {
+    const dropdownProfileImage = document.getElementById('dropdownProfileImage');
+    const profileImage = user.profileImage || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png";
+    dropdownProfileImage.src = profileImage;
+
+    document.getElementById('dropdown-username').textContent = user.username;
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const user = users.find(u => u.username === loggedInUser);
+
+    if (user) {
+        const dropdownProfileImage = document.getElementById('dropdownProfileImage');
+        const profileImage = user.profileImage || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png";
+        dropdownProfileImage.src = profileImage;
+
+        document.getElementById('dropdown-username').textContent = user.username;
+    }
+
+    showWelcomeNotification();
+});
+
+function showWelcomeNotification() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const lastNotifiedUser = localStorage.getItem('lastNotifiedUser');
+
+    if (loggedInUser && loggedInUser !== 'Guest' && loggedInUser !== lastNotifiedUser) {
+        const messages = [
+            'Welcome back, new content awaits!',
+            'Good to see you again!',
+            'Nice to have you back!'
+        ];
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+        showNotification(randomMessage, 'blue').then(() => {
+            // Set the lastNotifiedUser to current loggedInUser to avoid repetitive notifications
+            localStorage.setItem('lastNotifiedUser', loggedInUser);
+        });
+
+        // Also handle the case where the user clicks the close button
+        const closeIcon = document.querySelector('.toast .close'); // Assuming .toast is for blue notifications
+        if (closeIcon) {
+            closeIcon.addEventListener('click', () => {
+                // Set the lastNotifiedUser to current loggedInUser to avoid repetitive notifications
+                localStorage.setItem('lastNotifiedUser', loggedInUser);
+            });
+        }
+    }
+}
       </script>
   
       
@@ -90,7 +163,7 @@
             </button>
           </li>
           <li class="active">
-            <a href="homepage.html">
+            <a href="#">
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-200q0-17 11.5-28.5T400-440h160q17 0 28.5 11.5T600-400v200h120v-360L480-740 240-560v360Zm-80 0v-360q0-19 8.5-36t23.5-28l240-180q21-16 48-16t48 16l240 180q15 11 23.5 28t8.5 36v360q0 33-23.5 56.5T720-120H560q-17 0-28.5-11.5T520-160v-200h-80v200q0 17-11.5 28.5T400-120H240q-33 0-56.5-23.5T160-200Zm320-270Z"/></svg>
               <span>Home</span>
             </a>
@@ -141,13 +214,13 @@
               The goal of our website is to create a platform that features landmarks of the Philippines by showcasing its local experiences of the people through their shared personal stories. We aim to bring together unique perspectives on the country's landscapes and culture, building a richer understanding of the Philippines for locals and visitors alike, especially the tourists.
             </p>
             <div class="action__btns">
-              <button class="btn">Explore</button>
+              <button onclick="window.location.href='CRUD.html';" class="btn">Explore</button>
               <div class="story">
                 <div class="video__image">
                   <img src="images/Web Layout.png" alt="story" />
                   <span><i class="ri-play-fill"></i></span>
                 </div>
-                <span>Learn About Us!</span>
+                <a href="AboutUS.html"><span>Learn About Us!</span></a>
               </div>
             </div>
           </div>

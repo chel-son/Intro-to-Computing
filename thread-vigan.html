@@ -27,7 +27,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
         </label>
         <a class="home-link" id="profile-link">User Profile</a>
-        <a href="about.html">About Us</a> 
+        <a href="AboutUS.html">About Us</a> 
         <a onclick="toggleMenu()">Account</a>
         <div class="sub-menu-wrap" id="dropMenu">
           <div class="dropdown-menu">
@@ -41,42 +41,71 @@
                   <p>Edit Profile</p>
                   <span>></span>
               </a>
-              <a href="LoginPage.html" class="sub-menu-link">
-                  <img src="https://cdn-icons-png.flaticon.com/512/3596/3596149.png">
-                  <p>Logout</p>
-                  <span>></span>
-              </a>
+                <a href="javascript:void(0);" onclick="logout()" class="sub-menu-link">
+                <img src="https://cdn-icons-png.flaticon.com/512/3596/3596149.png">
+                <p>Logout</p>
+                <span>></span>
+            </a>                  
           </div>
       </div>            
     </div>
 </nav>
 <script> 
-    let dropMenu = document.getElementById("dropMenu");
-    function toggleMenu(){
-        dropMenu.classList.toggle("open-menu");
-    }
+function logout() {
+const messages = [
+'Looking forward to your next visit!',
+'Logging out. Redirecting you back to Login.',
+'Goodbye, until next time!'
+];
+const randomMessage = messages[Math.floor(Math.random() * messages.length)];
 
-    function updateNavbar() {
-        const username = localStorage.getItem('loggedInUser');
-        if (username) {
-            document.getElementById('profile-link').textContent = username;
-            document.getElementById('dropdown-username').textContent = username;
-        }
-    }
-    updateNavbar();
+// Close the dropdown menu
+const dropMenu = document.getElementById("dropMenu");
+if (dropMenu && dropMenu.classList.contains("open-menu")) {
+dropMenu.classList.remove("open-menu");
+}
+
+showNotification(randomMessage, 'red').then(() => {
+// Wait for the notification to disappear or be closed, then redirect
+window.location.href = 'LoginPage.html';
+});
+
+// Also handle the case where the user clicks the close button
+const closeIcon = document.querySelector('.toasty .close'); // Assuming .toasty is for red notifications
+if (closeIcon) {
+closeIcon.addEventListener('click', () => {
+window.location.href = 'LoginPage.html';
+});
+}
+}
+
+// Existing functions for menu toggle and navbar update
+let dropMenu = document.getElementById("dropMenu");
+function toggleMenu() {
+dropMenu.classList.toggle("open-menu");
+}
+
+function updateNavbar() {
+const username = localStorage.getItem('loggedInUser');
+if (username) {
+document.getElementById('profile-link').textContent = username;
+document.getElementById('dropdown-username').textContent = username;
+}
+}
+updateNavbar();
 
 document.addEventListener('DOMContentLoaded', () => {
-  const users = JSON.parse(localStorage.getItem('users')) || [];
-  const loggedInUser = localStorage.getItem('loggedInUser');
-  const user = users.find(u => u.username === loggedInUser);
-  
-  if (user) {
-      const dropdownProfileImage = document.getElementById('dropdownProfileImage');
-      const profileImage = user.profileImage || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png";
-      dropdownProfileImage.src = profileImage;
+const users = JSON.parse(localStorage.getItem('users')) || [];
+const loggedInUser = localStorage.getItem('loggedInUser');
+const user = users.find(u => u.username === loggedInUser);
 
-      document.getElementById('dropdown-username').textContent = user.username;
-  }
+if (user) {
+const dropdownProfileImage = document.getElementById('dropdownProfileImage');
+const profileImage = user.profileImage || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png";
+dropdownProfileImage.src = profileImage;
+
+document.getElementById('dropdown-username').textContent = user.username;
+}
 });
 </script>
   
@@ -113,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <li><a href="thread-iloilo.html">Iloilo</a></li>
             <li><a href="thread-negros.html">Negros Occidental</a></li>
             <li><a href="thread-palawan.html">Palawan</a></li>
-            <li class="active"><a href="thread-vigan.html">Vigan</a></li>
+            <li class="active"><a href="#">Vigan</a></li>
           </div>
         </ul>
       </li>

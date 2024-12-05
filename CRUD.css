@@ -639,3 +639,8 @@ main p {
   position: fixed;
   z-index: 100;
 }
+
+.icon-button.hidden {
+  opacity: 0.5; /* Adjust transparency level */
+  pointer-events: none; /* Disable clicking */
+}

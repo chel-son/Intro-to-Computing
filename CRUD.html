@@ -26,7 +26,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
         </label>
         <a class="home-link" id="profile-link">User Profile</a>
-        <a href="about.html">About Us</a> 
+        <a href="AboutUS.html">About Us</a> 
         <a onclick="toggleMenu()">Account</a>
         <div class="sub-menu-wrap" id="dropMenu">
           <div class="dropdown-menu">
@@ -40,42 +40,71 @@
                   <p>Edit Profile</p>
                   <span>></span>
               </a>
-              <a href="LoginPage.html" class="sub-menu-link">
-                  <img src="https://cdn-icons-png.flaticon.com/512/3596/3596149.png">
-                  <p>Logout</p>
-                  <span>></span>
-              </a>
+              <a href="javascript:void(0);" onclick="logout()" class="sub-menu-link">
+                <img src="https://cdn-icons-png.flaticon.com/512/3596/3596149.png">
+                <p>Logout</p>
+                <span>></span>
+            </a>                  
           </div>
       </div>            
     </div>
 </nav>
 <script> 
-    let dropMenu = document.getElementById("dropMenu");
-    function toggleMenu(){
-        dropMenu.classList.toggle("open-menu");
-    }
+function logout() {
+const messages = [
+'Looking forward to your next visit!',
+'Logging out. Redirecting you back to Login.',
+'Goodbye, until next time!'
+];
+const randomMessage = messages[Math.floor(Math.random() * messages.length)];
 
-    function updateNavbar() {
-        const username = localStorage.getItem('loggedInUser');
-        if (username) {
-            document.getElementById('profile-link').textContent = username;
-            document.getElementById('dropdown-username').textContent = username;
-        }
-    }
-    updateNavbar();
+// Close the dropdown menu
+const dropMenu = document.getElementById("dropMenu");
+if (dropMenu && dropMenu.classList.contains("open-menu")) {
+dropMenu.classList.remove("open-menu");
+}
+
+showNotification(randomMessage, 'red').then(() => {
+// Wait for the notification to disappear or be closed, then redirect
+window.location.href = 'LoginPage.html';
+});
+
+// Also handle the case where the user clicks the close button
+const closeIcon = document.querySelector('.toasty .close'); // Assuming .toasty is for red notifications
+if (closeIcon) {
+closeIcon.addEventListener('click', () => {
+window.location.href = 'LoginPage.html';
+});
+}
+}
+
+// Existing functions for menu toggle and navbar update
+let dropMenu = document.getElementById("dropMenu");
+function toggleMenu() {
+dropMenu.classList.toggle("open-menu");
+}
+
+function updateNavbar() {
+const username = localStorage.getItem('loggedInUser');
+if (username) {
+document.getElementById('profile-link').textContent = username;
+document.getElementById('dropdown-username').textContent = username;
+}
+}
+updateNavbar();
 
 document.addEventListener('DOMContentLoaded', () => {
-  const users = JSON.parse(localStorage.getItem('users')) || [];
-  const loggedInUser = localStorage.getItem('loggedInUser');
-  const user = users.find(u => u.username === loggedInUser);
-  
-  if (user) {
-      const dropdownProfileImage = document.getElementById('dropdownProfileImage');
-      const profileImage = user.profileImage || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png";
-      dropdownProfileImage.src = profileImage;
+const users = JSON.parse(localStorage.getItem('users')) || [];
+const loggedInUser = localStorage.getItem('loggedInUser');
+const user = users.find(u => u.username === loggedInUser);
 
-      document.getElementById('dropdown-username').textContent = user.username;
-  }
+if (user) {
+const dropdownProfileImage = document.getElementById('dropdownProfileImage');
+const profileImage = user.profileImage || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png";
+dropdownProfileImage.src = profileImage;
+
+document.getElementById('dropdown-username').textContent = user.username;
+}
 });
 
 </script>
@@ -95,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </a>
       </li>
       <li class="active">
-        <a href="CRUD.html">
+        <a href="#">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"/></svg>
           <span>Dashboard</span>
         </a>
@@ -131,42 +160,42 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="content">
         <div class="name">Cebu</div>
         <div class="des">Where the Heart Sings and Adventure Springs!</div>
-        <button>Explore</button>
+        <button onclick="window.location.href='thread-cebu.html';">Explore</button>
       </div>
     </div>
     <div class="item" style="background-image: url(images/BICOL/main.jpg);">
       <div class="content">
         <div class="name">Bicol</div>
         <div class="des">In Bicol City, Spicy Delights, Bicol Express Ignites!</div>
-        <button>Explore</button>
+        <button onclick="window.location.href='thread-bicol.html';">Explore</button>
       </div>
     </div>
     <div class="item" style="background-image: url(images/ILOILO/mainpic.jpg);">
       <div class="content">
         <div class="name">Iloilo</div>
         <div class="des">Fun, Foodie, Friendly! The City Of Gastronomy!</div>
-        <button>Explore</button>
+        <button onclick="window.location.href='thread-iloilo.html';">Explore</button>
       </div>
     </div>
     <div class="item" style="background-image: url(images/NEGROSOCCIDENTAL/main.jpg)">
       <div class="content">
         <div class="name">Negros Occidental</div>
         <div class="des">The Land of Sweet Surprises and Endless Smiles!</div>
-        <button>Explore</button>
+        <button onclick="window.location.href='thread-negros.html';">Explore</button>
       </div>
     </div>
     <div class="item" style="background-image: url(images/Palawan/MAIN.webp)">
       <div class="content">
         <div class="name">Palawan</div>
         <div class="des">Every Island, An Adventure with Lots to Explore!</div>
-        <button>Explore</button>
+        <button onclick="window.location.href='thread-palawan.html';">Explore</button>
       </div>
     </div>
     <div class="item" style="background-image: url(images/VIGAN/Main_.jfif)">
       <div class="content">
         <div class="name">Vigan</div>
         <div class="des">History Lives and Culture Thrives! La Viva Vigan!</div>
-        <button>Explore</button>
+        <button onclick="window.location.href='thread-vigan.html';">Explore</button>
       </div>
     </div>
   </div>
@@ -176,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
   <div class="actionbutton">
     <button class="icon-button create" onclick="window.location.href='FORM.html'"></button>
-    <button class="icon-button edit" onclick="window.location.href='FORM.html'"></button>
+    <button class="icon-button edit"></button>
     <button class="icon-button delete" id="delete-button"></button>
   </div>
 </main>
