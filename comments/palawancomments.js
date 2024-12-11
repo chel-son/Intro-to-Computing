@@ -212,11 +212,12 @@ document.querySelector('.next').addEventListener('click', nextSlide);
 document.querySelector('.prev').addEventListener('click', prevSlide);
 window.addEventListener('load', loadComments);
 
-// Function to check if the user is a guest and adjust button visibility/functionality
+// Function to check if the user is a guest or an admin and adjust button visibility/functionality
 function checkGuestUser() {
     const loggedInUser = localStorage.getItem('loggedInUser');
     const addCommentBtn = document.getElementById('addCommentBtn');
     const saveEditCommentBtn = document.getElementById('saveEditCommentBtn');
+    const userType = getUserType(loggedInUser);
 
     if (loggedInUser === 'Guest') {
         addCommentBtn.style.opacity = '0.5';
@@ -226,6 +227,15 @@ function checkGuestUser() {
         };
         saveEditCommentBtn.onclick = function() {
             showNotification('You must sign in first to share experiences', 'red');
+        };
+    } else if (userType === 'admin') {
+        addCommentBtn.style.opacity = '0.5';
+        saveEditCommentBtn.style.opacity = '0.5';
+        addCommentBtn.onclick = function() {
+            showNotification('You cannot share experiences as an Admin', 'red');
+        };
+        saveEditCommentBtn.onclick = function() {
+            showNotification('You cannot share experiences as an Admin', 'red');
         };
     } else {
         addCommentBtn.style.opacity = '1';

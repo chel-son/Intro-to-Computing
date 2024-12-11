@@ -67,7 +67,9 @@ h1{
 .details{
   position: absolute;
   bottom: 43px;
-  left: 43px;
+  left: 0px;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 20px;
 }
 .details h2{
   font-family: "Jost", sans-serif;
@@ -89,9 +91,9 @@ h1{
   line-height: 33px;
   text-align: left;
   color: #fff;
-  text-transform: uppercase;
   transition: 0.7s ease;
   display: none;
+
 }
 .slider-img.active{
   width: 766px !important;

@@ -605,7 +605,7 @@ header {
     background-size: cover;
     text-align: center;
     justify-content: center;
-    animation: change 20s infinite ease-in-out;
+    animation: change 40s infinite ease-in-out;
     z-index: 0;
 }
 
@@ -615,27 +615,37 @@ header {
     padding: 2em;
 }
 
-@keyframes change{
-    0%, 100%
-    {
-        background-image: url(https://media.istockphoto.com/id/176892793/photo/a-scenic-view-of-mayon-volcano.jpg?s=612x612&w=0&k=20&c=gjbf6kerjz_rPVgphAFKXQi8HgPKa8PJxpImrG7-uz4=);
-    }
-    20%
-    {
-        background-image: url(https://c0.wallpaperflare.com/preview/411/807/779/philippines-kawasan-falls-badian-asia.jpg);
-    }
-    40%
-    {
-        background-image: url(https://nomadparadise.com/wp-content/uploads/2020/10/171_00b.jpg);
-    }
-    60%
-    {
-        background-image: url(https://www.projectlupad.com/wp-content/uploads/2018/11/Iloilo-River-Esplanade-as-of-November-2018-Project-LUPAD-2.jpeg);
-    }
-    80%
-    {
-        background-image: url(https://live.staticflickr.com/1843/42578323410_7070c8c2c0_b.jpg);
-    }
+@keyframes change {
+  0%, 100% {
+      background-image: url("images/BackPics/1.jpg");
+  }
+  10%{
+      background-image: url("images/BackPics/2.avif");
+  }
+  20% {
+      background-image: url("images/BackPics/3.webp");
+  }
+  30%{
+      background-image: url("images/BackPics/4.jpg");
+  }
+  40% {
+      background-image: url("images/BackPics/5.jpg");
+  }
+  50%{
+      background-image: url("images/BackPics/6.jpg");
+  }
+  60% {
+      background-image: url("images/BackPics/7.jpg");
+  }
+  70%{
+      background-image: url("images/BackPics/8.jpg");
+  }
+  80% {
+      background-image: url("images/BackPics/9.webp");
+  }
+  90%{
+      background-image: url("images/BackPics/10.jpg");
+  }
 }
 
 #pre-loader {

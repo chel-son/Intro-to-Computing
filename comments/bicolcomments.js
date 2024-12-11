@@ -2,6 +2,18 @@
 let currentIndex = 0;
 const cardsToShow = 3;
 
+
+
+function setInitialButtonState() {
+    const addCommentBtn = document.getElementById('addCommentBtn');
+    const saveEditCommentBtn = document.getElementById('saveEditCommentBtn');
+    addCommentBtn.disabled = false;
+    saveEditCommentBtn.disabled = true;
+    addCommentBtn.style.opacity = '1';
+    saveEditCommentBtn.style.opacity = '0.5';
+}
+
+
 function showSlide(index) {
     const slider = document.querySelector('.slider');
     const totalCards = document.querySelectorAll('.card').length;
@@ -77,8 +89,10 @@ function addComment() {
             commentInput.value = '';
             showSlide(currentIndex);
 
-            showNotification("You added a comment.", 'blue'); // Added notification
+            showNotification("You added a comment.", 'blue'); 
             updateCommentCount();
+            resetForm();
+            setInitialButtonState();
         };
         reader.readAsDataURL(backgroundInput.files[0]);
     }
@@ -87,7 +101,7 @@ function addComment() {
 function getUserType(username) {
     const users = JSON.parse(localStorage.getItem('users')) || [];
     const user = users.find(user => user.username === username);
-    return user ? user.userType : 'user'; // Default to 'user' if no match
+    return user ? user.userType : 'user';
 }
 
 function createSlide(comment) {
@@ -140,8 +154,16 @@ function editComment(timestamp) {
         backgroundInput.dataset.timestamp = timestamp;
         userLocationInput.value = comment.location;
         commentInput.value = comment.text;
+
+        const addCommentBtn = document.getElementById('addCommentBtn');
+        const saveEditCommentBtn = document.getElementById('saveEditCommentBtn');
+        addCommentBtn.disabled = true;
+        saveEditCommentBtn.disabled = false;
+        addCommentBtn.style.opacity = '0.5';
+        saveEditCommentBtn.style.opacity = '1';
     }
 }
+
 
 function saveEditComment() {
     const backgroundInput = document.getElementById('backgroundInput');
@@ -168,7 +190,9 @@ function saveEditComment() {
                     comments[commentIndex].profileImage = profileImage;
                     localStorage.setItem('bicolcomments', JSON.stringify(comments));
                     loadComments();
-                    showNotification("You edited a comment.", 'blue'); // Added notification
+                    showNotification("You edited a comment.", 'blue'); 
+                    resetForm();
+                    setInitialButtonState(); 
                 };
                 reader.readAsDataURL(backgroundInput.files[0]);
             } else {
@@ -178,7 +202,9 @@ function saveEditComment() {
                 comments[commentIndex].profileImage = profileImage;
                 localStorage.setItem('bicolcomments', JSON.stringify(comments));
                 loadComments();
-                showNotification("You edited a comment.", 'blue'); // Added notification
+                showNotification("You edited a comment.", 'blue'); 
+                resetForm();
+                setInitialButtonState(); 
             }
         }
 
@@ -189,12 +215,23 @@ function saveEditComment() {
     }
 }
 
+function resetForm() {
+    const backgroundInput = document.getElementById('backgroundInput');
+    const userLocationInput = document.getElementById('userLocationInput');
+    const commentInput = document.getElementById('commentInput');
+
+    backgroundInput.value = '';
+    userLocationInput.value = '';
+    commentInput.value = '';
+    delete backgroundInput.dataset.timestamp;
+}
+
 function deleteComment(timestamp) {
     let comments = JSON.parse(localStorage.getItem('bicolcomments')) || [];
     comments = comments.filter(comment => comment.timestamp !== timestamp);
     localStorage.setItem('bicolcomments', JSON.stringify(comments));
     loadComments();
-    showNotification("You deleted a comment.", 'red'); // Added notification
+    showNotification("You deleted a comment.", 'red'); 
     updateCommentCount();
 }
 
@@ -211,11 +248,13 @@ document.querySelector('.next').addEventListener('click', nextSlide);
 document.querySelector('.prev').addEventListener('click', prevSlide);
 window.addEventListener('load', loadComments);
 
-// Function to check if the user is a guest and adjust button visibility/functionality
+
+// Function to check if the user is a guest or an admin and adjust button visibility/functionality
 function checkGuestUser() {
     const loggedInUser = localStorage.getItem('loggedInUser');
     const addCommentBtn = document.getElementById('addCommentBtn');
     const saveEditCommentBtn = document.getElementById('saveEditCommentBtn');
+    const userType = getUserType(loggedInUser);
 
     if (loggedInUser === 'Guest') {
         addCommentBtn.style.opacity = '0.5';
@@ -226,6 +265,15 @@ function checkGuestUser() {
         saveEditCommentBtn.onclick = function() {
             showNotification('You must sign in first to share experiences', 'red');
         };
+    } else if (userType === 'admin') {
+        addCommentBtn.style.opacity = '0.5';
+        saveEditCommentBtn.style.opacity = '0.5';
+        addCommentBtn.onclick = function() {
+            showNotification('You cannot share experiences as an Admin', 'red');
+        };
+        saveEditCommentBtn.onclick = function() {
+            showNotification('You cannot share experiences as an Admin', 'red');
+        };
     } else {
         addCommentBtn.style.opacity = '1';
         saveEditCommentBtn.style.opacity = '1';
@@ -233,6 +281,7 @@ function checkGuestUser() {
         saveEditCommentBtn.onclick = saveEditComment;
     }    
 }
+
 
 // Update the load event to include the guest check
 window.addEventListener('load', function() {
@@ -276,4 +325,6 @@ window.addEventListener('load', function() {
     loadComments();
     checkGuestUser();
     handleCommentInput();
+    setInitialButtonState();
 });
+

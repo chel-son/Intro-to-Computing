@@ -6,8 +6,9 @@
     font-family: 'Poppins', sans-serif;
 }
 body{
-    background: url(https://c0.wallpaperflare.com/preview/411/807/779/philippines-kawasan-falls-badian-asia.jpg);
+    background: url("images/BackPics/ForLogin.jpg");
     background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     overflow: hidden;
